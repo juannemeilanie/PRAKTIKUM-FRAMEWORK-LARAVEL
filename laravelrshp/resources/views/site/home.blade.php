@@ -81,10 +81,10 @@
     </header>
     <nav>
         <ul>
-            <li><a href="{{ route('home') }}">Home</a></li>
-            <li><a href="{{ route('struktur') }}">Struktur Organisasi</a></li>
-            <li><a href="{{ route('layanan') }}">Layanan Umum</a></li>
-            <li><a href="{{ route('visimisi') }}">Visi Misi dan Tujuan</a></li>
+            <li><a href="{{ route('site.home') }}">Home</a></li>
+            <li><a href="{{ route('site.struktur') }}">Struktur Organisasi</a></li>
+            <li><a href="{{ route('site.layanan') }}">Layanan Umum</a></li>
+            <li><a href="{{ route('site.visimisi') }}">Visi Misi dan Tujuan</a></li>
             <li><a href="{{ route('login') }}">login</a></li>
         </ul>
     </nav>

@@ -81,32 +81,34 @@
     </header>
     <nav>
         <ul>
-            <li><a href="{{ route('home') }}">Home</a></li>
-            <li><a href="{{ route('struktur') }}">Struktur Organisasi</a></li>
-            <li><a href="{{ route('layanan') }}">Layanan Umum</a></li>
-            <li><a href="{{ route('visimisi') }}">Visi Misi dan Tujuan</a></li>
+            <li><a href="{{ route('site.home') }}">Home</a></li>
+            <li><a href="{{ route('site.struktur') }}">Struktur Organisasi</a></li>
+            <li><a href="{{ route('site.layanan') }}">Layanan Umum</a></li>
+            <li><a href="{{ route('site.visimisi') }}">Visi Misi dan Tujuan</a></li>
             <li><a href="{{ route('login') }}">login</a></li>
         </ul>
     </nav>
 
-        <section id="visimisi">
-        <h2>Visi Misi dan Tujuan</h2>
-        <p><strong>Visi:</strong> Menjadi rumah sakit hewan pendidikan terkemuka yang memberikan pelayanan kesehatan hewan berkualitas tinggi.</p>
-        <p><strong>Misi:</strong></p>
-        <ul>
-            <li>Menyediakan layanan kesehatan hewan yang profesional dan terpercaya.</li>
-            <li>Mengembangkan ilmu pengetahuan dan teknologi di bidang kedokteran hewan.</li>
-            <li>Meningkatkan kesadaran masyarakat tentang pentingnya kesehatan hewan.</li>
-        </ul>
-        <p><strong>Tujuan:</strong></p>
-        <ul>
-            <li>Meningkatkan kualitas pelayanan kesehatan hewan.</li>
-            <li>Memberikan edukasi kepada masyarakat tentang perawatan hewan.</li>
-            <li>Mendukung penelitian dan pengembangan di bidang kedokteran hewan.</li>
-        </ul>
-        </section>
+    <section id="struktur">
+        <h2>Struktur Organisasi</h2>
+        <p>Struktur organisasi Rumah Sakit Hewan Pendidikan Universitas Airlangga terdiri dari berbagai posisi yang saling mendukung untuk memberikan pelayanan terbaik.
+            <ul>
+                <li>Direktur</li>
+                <li>Wakil Direktur Pelayanan</li>
+                <li>Wakil Direktur Akademik</li>
+                <li>Kepala Instalasi:
+                    <ul>
+                        <li>Poliklinik Hewan Kecil</li>
+                        <li>Poliklinik Hewan Besar</li>
+                        <li>Laboratorium</li>
+                    </ul>
+                </li>
+                <li>Bagian Administrasi </li>
+             </ul> 
+        </p>
+    </section>  
 
-            <footer>
+        <footer>
         <p>Untuk informasi lebih lanjut, kunjungi website kami di <a href="https://www.unair.ac.id">www.unair.ac.id</a> </p>
         <p>Alamat: Jl. Airlangga No. 4-6, Surabaya, Jawa Timur, Indonesia </p>
         <p>Telepon: (031) 555-1234 </p>
@@ -114,4 +116,3 @@
     </footer>
 </body>
 </html>
-

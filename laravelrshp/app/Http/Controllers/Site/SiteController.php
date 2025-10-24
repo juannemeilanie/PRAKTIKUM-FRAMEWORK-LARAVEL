@@ -1,12 +1,13 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Site;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class SiteController extends Controller
 {
     public function home(){
-        return view('home');
+        return view('site.home');
     }
 
     public function struktur(){
