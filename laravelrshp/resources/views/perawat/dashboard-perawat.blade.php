@@ -143,7 +143,7 @@ nav .logo {
         <div class="logo"> RSHP UNAIR</div>
 
         <ul class="nav-links">
-            <a href="{{ url('/data_rekam_medis') }}">Data Rekam Medis</a>
+            <a href="{{ route('perawat.rekam_medis.index') }}">Data Rekam Medis</a>
             <form action="{{ route('logout') }}" method="POST" style="display:inline;">
                 @csrf
                 <button type="submit">Logout</button>

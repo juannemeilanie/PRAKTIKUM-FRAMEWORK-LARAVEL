@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\RasHewanController;
 use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\Admin\JenisHewanController;
 use App\Http\Controllers\Admin\KodeTindakanController;
+use App\Http\Controllers\Perawat\RekamMedisController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriKlinisController;
 use App\Http\Controllers\Dokter\DashboardDokterController;
@@ -55,6 +56,12 @@ Route::middleware('isDokter')->group(function () {
 //Perawat
 Route::middleware('isPerawat')->group(function () {
     Route::get('/perawat/dashboard', [DashboardPerawatController::class, 'index'])->name('perawat.dashboard');
+    Route::prefix('perawat.rekam_medis')->group(function () {
+        Route::get('/', [RekamMedisController::class, 'index'])->name('perawat.rekam_medis.index');
+        Route::get('/create', [RekamMedisController::class, 'create'])->name('perawat.rekam_medis.create');
+        Route::post('/store', [RekamMedisController::class, 'store'])->name('perawat.rekam_medis.store');
+        Route::get('/{id}', [RekamMedisController::class, 'show'])->name('perawat.rekam_medis.detail');
+});
 });
 
 //Resepsionis
