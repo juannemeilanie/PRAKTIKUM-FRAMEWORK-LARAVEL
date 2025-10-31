@@ -11,17 +11,17 @@ class SiteController extends Controller
     }
 
     public function struktur(){
-        return view('struktur');
+        return view('site.struktur');
     }
     public function layanan(){
-        return view('layanan');
+        return view('site.layanan');
     }
     public function visimisi(){
-        return view('visimisi');
+        return view('site.visimisi');
     }
 
     public function login(){
-        return view('login');
+        return view('site.login');
     }
     
 }
