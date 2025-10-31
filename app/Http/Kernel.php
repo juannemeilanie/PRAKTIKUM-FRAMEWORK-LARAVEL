@@ -66,6 +66,9 @@ class Kernel extends HttpKernel
 
         // Tambahkan middleware custom Anda di sini
         'isAdministrator' => \App\Http\Middleware\IsAdministrator::class,
+        'isDokter' => \App\Http\Middleware\IsDokter::class,
+        'isPerawat' => \App\Http\Middleware\IsPerawat::class,
         'isResepsionis' => \App\Http\Middleware\IsResepsionis::class,
+        'isPemilik' => \App\Http\Middleware\isPemilik::class,
     ];
 }

@@ -10,4 +10,8 @@ class DashboardResepsionisController extends Controller
     public function index(){
         return view('resepsionis.dashboard-resepsionis');
     }
+
+    public function registrasi(){
+        return view('resepsionis.registrasi');
+    }
 }

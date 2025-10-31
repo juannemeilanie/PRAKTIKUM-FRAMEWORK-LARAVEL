@@ -33,7 +33,6 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -53,7 +52,7 @@ class LoginController extends Controller
     public function login(Request $request) {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|min:6',
+            'password' => 'required|min:4',
         ]);
 
         if ($validator->fails()) {
@@ -86,7 +85,7 @@ class LoginController extends Controller
             'user_name' => $user->nama,
             'user_email' => $user->email,
             'user_role' => $user->roleUser[0]->idrole ?? 'user',
-            'user_role_name' => $namaRole->nama_role ?? 'User',
+            'user_role_name' => $namaRole->nama_role ?? 'user',
             'user_status' => $user->roleUser[0]->status ?? 'active',
         ]);
 

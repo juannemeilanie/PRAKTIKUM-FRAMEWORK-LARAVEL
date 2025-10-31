@@ -140,31 +140,26 @@ nav .logo {
 </head>
 <body>
     <nav>
-        <div class="logo"> RSHP UNAIR</div>
+        <div class="logo">🐾 RS Hewan</div>
 
         <ul class="nav-links">
             <li class="dropdown">
                 <a href="#">Registrasi ▾</a>
                 <ul class="dropdown-menu">
+                    <li><a href="../registrasi/registrasi.php">Registrasi Umum</a></li>
                     <li><a href="registrasi_pemilik.php">Registrasi Pemilik</a></li>
                     <li><a href="registrasi_pet.php">Registrasi Pet</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="{{ url('temu_dokter') }}">Temu Dokter</a>
-            </li>
-            <li>
-                <form action="{{ route('logout') }}" method="POST" style="display:inline;">
-                    @csrf
-                    <button type="submit">Logout</button>
-                </form>
-            </li>
+
+            <li><a href="../resepsionis/temu_dokter.php">Temu Dokter</a></li>
+            <li><a href="/rshpoop/login/logout.php">Logout</a></li>
         </ul>
     </nav>
 
     <div class="content">
-        <h2>Halo, {{ Auth::user()->nama ?? 'Pengguna' }} 👋</h2>
-        <p>Selamat datang di halaman Resepsinonis</p>
+        <h2>Selamat Datang di Data Master</h2>
+        <p>Pilih menu di atas untuk melanjutkan.</p>
     </div>
 </body>
 </html>

@@ -18,7 +18,7 @@ class isAdministrator
      */
     public function handle(Request $request, Closure $next): Response
     {
-                // Jika user tidak terautentikasi, redirect ke login
+        // Jika user tidak terautentikasi, redirect ke login
         if (!Auth::check()) {
 
             return redirect()->route('login');

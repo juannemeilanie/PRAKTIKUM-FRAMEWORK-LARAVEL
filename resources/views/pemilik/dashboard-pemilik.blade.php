@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Resepsionis</title>
+    <title>Home - Dokter</title>
     <style>
 /* ===== Basic Layout ===== */
 body {
@@ -143,28 +143,17 @@ nav .logo {
         <div class="logo"> RSHP UNAIR</div>
 
         <ul class="nav-links">
-            <li class="dropdown">
-                <a href="#">Registrasi ▾</a>
-                <ul class="dropdown-menu">
-                    <li><a href="registrasi_pemilik.php">Registrasi Pemilik</a></li>
-                    <li><a href="registrasi_pet.php">Registrasi Pet</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="{{ url('temu_dokter') }}">Temu Dokter</a>
-            </li>
-            <li>
-                <form action="{{ route('logout') }}" method="POST" style="display:inline;">
-                    @csrf
-                    <button type="submit">Logout</button>
-                </form>
-            </li>
+            
+            <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                @csrf
+                <button type="submit">Logout</button>
+            </form>
         </ul>
     </nav>
 
     <div class="content">
-        <h2>Halo, {{ Auth::user()->nama ?? 'Pengguna' }} 👋</h2>
-        <p>Selamat datang di halaman Resepsinonis</p>
+        <h2>Halo, {{session('user_name')}}!</h2>
+        <p>Selamat datang di halaman Pemilik</p>
     </div>
 </body>
 </html>
