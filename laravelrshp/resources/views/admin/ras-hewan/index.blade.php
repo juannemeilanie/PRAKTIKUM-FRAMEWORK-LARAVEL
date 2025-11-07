@@ -15,13 +15,16 @@
     </style>
 </head>
 <body>
-    <h2>Data Master - Ras Hewan</h2>
+    <h2>Ras Hewan</h2>
     <table>
+        <button><a href="{{ route('admin.ras-hewan.create') }}"  method="POST" class="btn btn-danger w-100 fw-bold">Tambah Ras Hewan</a></button>
+        <button><a href="{{ route('admin.data_master') }}" class="btn btn-secondary w-100 fw-bold">Kembali</a></button>
         <thead>
             <tr>
                 <th>ID Ras</th>
                 <th>Jenis Hewan</th>
                 <th>Nama Ras Hewan</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +39,20 @@
                                 <span class="text-muted">-</span>
                             @endif</td>
                 <td>{{ $ras->nama_ras }}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Apakah Anda yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $ras->idras_hewan }}').submit(); }">
+                        <i class="fas fa-trash"></i> Hapus
+                    </button>
+                    <form id="delete-form-{{ $ras->idras_hewan }}" action="#" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                </td>
             </tr>
             @endforeach
         </tbody>
+    </table>
+</body>

@@ -15,8 +15,10 @@
     </style>
 </head>
 <body>
-    <h2>Data Master - Pet</h2>
+    <h2>Pet</h2>
     <table>
+        <button><a href ="{{ route('admin.pet.create') }}"  method="POST" class="btn btn-danger w-100 fw-bold">Tambah Pet</a></button>
+        <button><a href="{{ route('admin.data_master') }}" class="btn btn-secondary w-100 fw-bold">Kembali</a></button>
         <thead>
             <tr>
                 <th>Nama Pet</th>
@@ -37,6 +39,18 @@
                 <td>{{ $pet->jenis_kelamin }}</td>
                 <td>{{ $pet->pemilik->user->nama }}</td>
                 <td>{{ $pet->rasHewan->nama_ras }}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Apakah Anda yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $pet->idpet }}').submit(); }">
+                        <i class="fas fa-trash"></i> Hapus
+                    </button>
+                    <form id="delete-form-{{ $pet->idpet }}" action="#" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>                    
+                </td>
             </tr>
             @endforeach
         </tbody>

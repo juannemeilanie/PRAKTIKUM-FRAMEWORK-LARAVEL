@@ -147,7 +147,7 @@ nav .logo {
                 <a href="#">Data Master ▾</a>
                 <ul class="dropdown-menu">
                     <li><a href="{{ route('admin.user.index') }}">Data User</a></li>
-                    <li><a href="{{ route('admin.role.index') }}">Manajemen Role</a></li>
+                    <li><a href="{{ route('admin.user-role.index') }}">Manajemen Role</a></li>
                     <li><a href="{{ route('admin.jenis-hewan.index') }}">Jenis Hewan</a></li>
                     <li><a href="{{ route('admin.ras-hewan.index') }}">Ras Hewan</a></li>
                     <li><a href="{{ route('admin.pemilik.index') }}">Data Pemilik</a></li>

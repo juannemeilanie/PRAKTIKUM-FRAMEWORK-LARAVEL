@@ -139,44 +139,17 @@ nav .logo {
 
     </style>
 </head>
-<!-- <body>
-    <nav>
-        <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-        <a href="{{ route('data_master') }}">Data Master</a>
-        <form action="{{ route('logout') }}" method="POST" style="display:inline;">
-            @csrf
-            <button type="submit">Logout</button>
-        </form>
-    </nav>
 
-    <div class="content">
-        <h2>Halo, {{ Auth::user()->nama ?? 'Pengguna' }} 👋</h2>
-        <p>Selamat datang di halaman Data Master</p>
-
-        <div class="menu">
-            <a href="{{ route('admin.user.index') }}">Data User</a>
-            <a href="{{ route('admin.role.index') }}">Manajemen Role</a>
-            <a href="{{ route('admin.jenis-hewan.index') }}">Jenis Hewan</a>
-            <a href="{{ route('admin.ras-hewan.index') }}">Ras Hewan</a>
-            <a href="{{ route('admin.pemilik.index') }}">Data Pemilik</a>
-            <a href="{{ route('admin.pet.index') }}">Data Pet</a>
-            <a href="{{ route('admin.kategori.index') }}">Data Kategori</a>
-            <a href="{{ route('admin.kategori-klinis.index') }}">Data Kategori Klinis</a>
-            <a href="{{ route('admin.kode-tindakan.index') }}">Data Kode Tindakan Terapi</a>
-        </div>
-    </div>
-</body>
-</html> -->
 <body>
     <nav>
-        <div class="logo">🐾 RS Hewan</div>
+        <div class="logo">RSHP UNAIR</div>
 
         <ul class="nav-links">
             <li class="dropdown">
                 <a href="#">Data Master ▾</a>
                 <ul class="dropdown-menu">
                     <li><a href="{{ route('admin.user.index') }}">Data User</a></li>
-                    <li><a href="{{ route('admin.role.index') }}">Manajemen Role</a></li>
+                    <li><a href="{{ route('admin.user-role.index') }}">Manajemen Role</a></li>
                     <li><a href="{{ route('admin.jenis-hewan.index') }}">Jenis Hewan</a></li>
                     <li><a href="{{ route('admin.ras-hewan.index') }}">Ras Hewan</a></li>
                     <li><a href="{{ route('admin.pemilik.index') }}">Data Pemilik</a></li>

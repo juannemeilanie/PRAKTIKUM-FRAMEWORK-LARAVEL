@@ -6,6 +6,7 @@ class RasHewan extends Model{
     protected $table = 'ras_hewan';
     protected $primaryKey = 'idras_hewan';
     protected $fillable = ['nama_ras', 'idjenis_hewan'];
+    public $timestamps = false;
 
     public function jenisHewan()
     {

@@ -15,8 +15,11 @@
     </style>
 </head>
 <body>
-    <h2>Data Master - User</h2>
+    <h2>User</h2>
+
     <table>
+        <button><a href ="{{ route('admin.user.create') }}"  method="POST" class="btn btn-danger w-100 fw-bold">Tambah User</a></button>
+        <button><a href="{{ route('admin.data_master') }}" class="btn btn-secondary w-100 fw-bold">Kembali</a></button>
         <thead>
             <tr>
                 <th>ID</th>
@@ -26,11 +29,19 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($users as $index => $user)
+            @foreach ($users as $index => $u)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $user->nama }}</td>
-                <td>{{ $user->email }}</td>
+                <td>{{ $u->nama }}</td>
+                <td>{{ $u->email }}</td>
+                <td>
+                    <button><a href="{{ route('admin.user.edit', $u->iduser) }}" class="btn btn-sm btn-warning">Edit</a></button>
+                    <form action="{{ route('admin.user.destroy', $u->iduser) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
+                        @csrf
+                        @method('DELETE')
+                    <button type="submit">Hapus</button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </tbody>
