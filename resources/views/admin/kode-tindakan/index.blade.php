@@ -17,6 +17,8 @@
 <body>
     <h2>Data Master - Kode Tindakan</h2>
     <table>
+        <button><a href="{{ route('admin.kode-tindakan.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Kode Tindakan</a></button>
+        <button><a href="{{ route('admin.data_master') }}" class="btn btn-secondary w-100 fw-bold">Kembali</a></button>
         <thead>
             <tr>
                 <th>ID </th>
@@ -35,6 +37,18 @@
                 <td>{{ $kode->deskripsi_tindakan_terapi }}</td>
                 <td>{{ $kode->kategori->nama_kategori }}</td>
                 <td>{{ $kode->kategoriKlinis->nama_kategori_klinis }}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Apakah Anda yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $kode->idkode_tindakan }}').submit(); }">
+                        <i class="fas fa-trash"></i> Hapus
+                    </button>
+                    <form id="delete-form-{{ $kode->idkode_tindakan }}" action="#" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                </td>
             </tr>
             @endforeach
         </tbody>    

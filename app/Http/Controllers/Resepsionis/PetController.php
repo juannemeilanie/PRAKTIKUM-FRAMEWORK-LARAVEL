@@ -1,22 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Resepsionis;
 
-use App\Models\Pet;
-use App\Models\Pemilik;
-use App\Models\RasHewan;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class PetController extends Controller
 {
     public function index(){
         $pets = Pet::all();
-        return view('admin.pet.index', compact('pets'));
+        return view('resepsionis.registrasi_pet', compact('pets'));
     }
 
     public function create(){
-        return view('admin.pet.tambah', [
+        return view('resepsionis.registrasi_pet', [
             'pemilik' => Pemilik::all(),
             'rashewan' => RasHewan::all(),
         ]);
@@ -27,7 +24,7 @@ class PetController extends Controller
 
         $pets = $this->createPet($validatedData);
 
-        return redirect()->route('admin.pet.index')
+        return redirect()->route('resepsionis.registrasi_pet')
                         ->with('success', 'Pet berhasil ditambahkan.');
     }
     

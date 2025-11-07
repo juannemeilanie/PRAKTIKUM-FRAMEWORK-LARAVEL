@@ -11,7 +11,12 @@ class DashboardResepsionisController extends Controller
         return view('resepsionis.dashboard-resepsionis');
     }
 
-    public function registrasi(){
-        return view('resepsionis.registrasi');
+    public function registrasipemilik(){
+        return view('resepsionis.registrasi_pemilik');
     }
+
+    public function registrasipet(){
+        return view('resepsionis.registrasi_pet');
+    } 
+
 }

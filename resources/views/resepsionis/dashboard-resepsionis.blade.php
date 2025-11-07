@@ -146,8 +146,8 @@ nav .logo {
             <li class="dropdown">
                 <a href="#">Registrasi ▾</a>
                 <ul class="dropdown-menu">
-                    <li><a href="registrasi_pemilik.php">Registrasi Pemilik</a></li>
-                    <li><a href="registrasi_pet.php">Registrasi Pet</a></li>
+                    <li><a href="{{ route('resepsionis.registrasi_pemilik') }}">Registrasi Pemilik</a></li>
+                    <li><a href="{{ route('resepsionis.registrasi_pet') }}">Registrasi Pet</a></li>
                 </ul>
             </li>
             <li>

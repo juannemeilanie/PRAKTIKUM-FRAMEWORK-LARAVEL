@@ -18,6 +18,7 @@
 <body>
     <h2>Data Master - Role</h2>
     <table>
+        <button><a href="{{ route('admin.data_master') }}" class="btn btn-secondary w-100 fw-bold">Kembali</a></button>
         <thead>
             <tr>
                 <th>ID</th>

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\RasHewanController;
 use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\Admin\JenisHewanController;
 use App\Http\Controllers\Admin\KodeTindakanController;
+use App\Http\Controllers\Perawat\RekamMedisController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriKlinisController;
 use App\Http\Controllers\Dokter\DashboardDokterController;
@@ -32,19 +33,58 @@ Route::get('/site/visimisi', [SiteController::class, 'visimisi'])->name('site.vi
 Route::get('/login', [SiteController::class, 'login'])->name('login');
 
 //Admin
-Route::middleware('isAdministrator')->group(function () {
-    Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/data_master', [DashboardAdminController::class, 'dataMaster'])->name('data_master');
-    Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user.index');
-    Route::get('/admin/role', [RoleController::class, 'index'])->name('admin.role.index');
-    Route::get('/admin/user-role', [RoleUserController::class, 'index'])->name('admin.user-role.index');
-    Route::get('/admin/jenis-hewan', [JenisHewanController::class, 'index'])->name('admin.jenis-hewan.index');
-    Route::get('/admin/ras-hewan', [RasHewanController::class, 'index'])->name('admin.ras-hewan.index');
-    Route::get('/admin/pemilik', [PemilikController::class, 'index'])->name('admin.pemilik.index');
-    Route::get('/admin/pet', [PetController::class, 'index'])->name('admin.pet.index');
-    Route::get('/admin/kategori', [KategoriController::class, 'index'])->name('admin.kategori.index');  
-    Route::get('/admin/kategori-klinis', [KategoriKlinisController::class, 'index'])->name('admin.kategori-klinis.index');
-    Route::get('/admin/kode-tindakan', [KodeTindakanController::class, 'index'])->name('admin.kode-tindakan.index');
+Route::middleware('isAdministrator')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('dashboard');
+    Route::get('/data_master', [DashboardAdminController::class, 'dataMaster'])->name('data_master');
+
+    //user
+    Route::get('/user', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+    Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+    // role user
+    Route::get('/user-role', [RoleUserController::class, 'index'])->name('user-role.index');
+    Route::get('/user-role/create', [RoleUserController::class, 'create'])->name('user-role.create');
+    Route::post('/user-role/store', [RoleUserController::class, 'store'])->name('user-role.store');
+
+    //Jenis Hewan
+    Route::get('/jenis-hewan', [JenisHewanController::class, 'index'])->name('jenis-hewan.index');
+    Route::get('/jenis-hewan/create', [JenisHewanController::class, 'create'])->name('jenis-hewan.create');
+    Route::post('/jenis-hewan/store', [JenisHewanController::class, 'store'])->name('jenis-hewan.store');
+
+    //Ras Hewan
+    Route::get('/ras-hewan', [RasHewanController::class, 'index'])->name('ras-hewan.index');
+    Route::get('/ras-hewan/create', [RasHewanController::class, 'create'])->name('ras-hewan.create');
+    Route::post('/ras-hewan/store', [RasHewanController::class, 'store'])->name('ras-hewan.store');
+
+    //Pemilik
+    Route::get('/pemilik', [PemilikController::class, 'index'])->name('pemilik.index');
+    Route::get('/pemilik/create', [PemilikController::class, 'create'])->name('pemilik.create');
+    Route::post('/pemilik/store', [PemilikController::class, 'store'])->name('pemilik.store');
+
+    //Pet
+    Route::get('/pet', [PetController::class, 'index'])->name('pet.index');
+    Route::get('/pet/create', [PetController::class, 'create'])->name('pet.create');
+    Route::post('/pet/store', [PetController::class, 'store'])->name('pet.store');  
+   
+
+    //Kategori
+    Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
+    Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
+    Route::post('/kategori/store', [KategoriController::class, 'store'])->name('kategori.store');  
+
+    //Kategori Klinis
+    Route::get('/kategori-klinis', [KategoriKlinisController::class, 'index'])->name('kategori-klinis.index');
+    Route::get('/kategori-klinis/create', [KategoriKlinisController::class, 'create'])->name('kategori-klinis.create');
+    Route::post('/kategori-klinis/store', [KategoriKlinisController::class, 'store'])->name('kategori-klinis.store');
+
+    //Kode Tindakan
+    Route::get('/kode-tindakan', [KodeTindakanController::class, 'index'])->name('kode-tindakan.index');
+    Route::get('/kode-tindakan/create', [KodeTindakanController::class, 'create'])->name('kode-tindakan.create');
+    Route::post('/kode-tindakan/store', [KodeTindakanController::class, 'store'])->name('kode-tindakan.store');
 });
 
 //Dokter
@@ -55,12 +95,21 @@ Route::middleware('isDokter')->group(function () {
 //Perawat
 Route::middleware('isPerawat')->group(function () {
     Route::get('/perawat/dashboard', [DashboardPerawatController::class, 'index'])->name('perawat.dashboard');
+    Route::prefix('perawat.rekam_medis')->group(function () {
+        Route::get('/', [RekamMedisController::class, 'index'])->name('perawat.rekam_medis.index');
+        Route::get('/create', [RekamMedisController::class, 'create'])->name('perawat.rekam_medis.create');
+        Route::post('/store', [RekamMedisController::class, 'store'])->name('perawat.rekam_medis.store');
+        Route::get('/{id}', [RekamMedisController::class, 'show'])->name('perawat.rekam_medis.detail');
+});
 });
 
 //Resepsionis
-Route::middleware('isResepsionis')->group(function () {
-    Route::get('/resepsionis/dashboard', [DashboardResepsionisController::class, 'index'])->name('resepsionis.dashboard');
-    Route::get('/resepsionis/registrasi', [DashboardResepsionisController::class, 'registrasi'])->name('resepsionis.registrasi');
+Route::middleware('isResepsionis')->prefix('resepsionis')->name('resepsionis.')->group(function () {
+    Route::get('/dashboard', [DashboardResepsionisController::class, 'index'])->name('dashboard');
+    Route::get('/registrasipemilik', [PemilikController::class, 'create'])->name('registrasi_pemilik');
+    Route::post('/registrasipemilik', [PemilikController::class, 'store'])->name('registrasi_pemilik');  
+    Route::get('/registrasipet', [PetController::class, 'create'])->name('registrasi_pet');
+    Route::post('/registrasipet', [PetController::class, 'store'])->name('registrasi_pet');
 });
 
 //Pemilik

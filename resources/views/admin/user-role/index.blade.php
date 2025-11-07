@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Role</title>
+    <title>Manajemen Role</title>
     <style>
         tr { text-align: center; }
         body { font-family: Arial, sans-serif; background: #f4f4f4; padding:20px; }
@@ -16,8 +16,10 @@
     </style>
 </head>
 <body>
-    <h2>User Role</h2>
+    <h2>Manajemen Role</h2>
     <table>
+        <button><a href ="{{ route('admin.user-role.create') }}"  method="POST" class="btn btn-danger w-100 fw-bold">Tambah Role User</a></button>
+        <button><a href="{{ route('admin.data_master') }}" class="btn btn-secondary w-100 fw-bold">Kembali</a></button>
         <thead>
             <tr>
                 <th>ID</th>
@@ -35,6 +37,18 @@
                 @foreach($userRole->role as $role)
                     {{ $role->nama_role }}
                 @endforeach
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Apakah Anda yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $userRole->id }}').submit(); }">
+                        <i class="fas fa-trash"></i> Hapus
+                    </button>
+                    <form id="delete-form-{{ $userRole->id }}" action="#" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
                 </td>
             </tr>
             @endforeach

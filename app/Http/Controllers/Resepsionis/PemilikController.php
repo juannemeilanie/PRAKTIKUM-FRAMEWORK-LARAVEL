@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Resepsionis;
 
-use App\Models\Pemilik;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class PemilikController extends Controller
 {
     public function index(){
         $pemilik = Pemilik::with('user')->get();
-        return view('admin.pemilik.index', compact('pemilik'));
+        return view('resepsionis.registrasi_pemilik', compact('pemilik'));
     }
 
     public function create(){
-        return view('admin.pemilik.tambah');
+        return view('resepsionis.registrasi_pemilik');
     }
 
     public function store(Request $request){
@@ -22,7 +21,7 @@ class PemilikController extends Controller
 
         $pemilik = $this->createPemilik($validatedData);
 
-        return redirect()->route('admin.pemilik.index')
+        return redirect()->route('resepsionis.registrasi_pemilik')
                         ->with('success', 'Pemilik berhasil ditambahkan.');
     }
 
