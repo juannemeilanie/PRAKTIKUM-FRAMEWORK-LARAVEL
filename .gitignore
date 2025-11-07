@@ -1,16 +1,23 @@
-node_modules
+# Laravel & PHP
+/vendor
 /node_modules
 /public/storage
 /storage/*.key
-/vendor
+/.vscode
+/.idea
+/.fleet
+
+# Environment & Config
 .env
 .env.backup
-.phpunit.result.cache
+.env.production
+auth.json
 Homestead.yaml
 Homestead.json
-.idea
-/.vscode
+
+# Build & Temp files
 /public/hot
 /public/build
+.phpunit.result.cache
 npm-debug.log
 yarn-error.log
