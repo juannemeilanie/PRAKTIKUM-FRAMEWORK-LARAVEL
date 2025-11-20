@@ -4,13 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\JenisHewan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class JenisHewanController extends Controller
 {
     public function index(){
 
-        $jenisHewan = JenisHewan::all();
+        // $jenisHewan = JenisHewan::all();
+
+        $jenisHewan = DB::table('jenis_hewan')
+        ->select('idjenis_hewan', 'nama_jenis_hewan')
+        ->get();
         return view('admin.jenis-hewan.index', compact('jenisHewan'));
     }
 
@@ -52,12 +57,18 @@ class JenisHewanController extends Controller
         ]);
     }
 
+
     //helper untuk membuat data baru
     protected function createJenisHewan(array $data){
         try{
-            return JenisHewan::create([
-                'nama_jenis_hewan' => $this->formatNamaJenisHewan($data['nama_jenis_hewan']),   
+            // return JenisHewan::create([
+            //     'nama_jenis_hewan' => $this->formatNamaJenisHewan($data['nama_jenis_hewan']),   
+            // ]);
+
+            $jenisHewan = DB::table('jenis_hewan')->insert([
+                'nama_jenis_hewan' => $this->formatNamaJenisHewan($data['nama_jenis_hewan']),
             ]);
+            return $jenisHewan;
         } catch (\Exception $e) {
             throw new \Exception('Gagal menyimpan data jenis hewan:' . $e->getMessage());
         }
@@ -66,6 +77,57 @@ class JenisHewanController extends Controller
     //helper untuk format nama jenis hewan
     protected function formatNamaJenisHewan($nama){
         return trim(ucwords(strtolower($nama)));
+    }
+
+    public function edit($id){
+
+        $jenisHewan = DB::table('jenis_hewan')
+            ->where('idjenis_hewan', $id)
+            ->first();
+
+        if (!$jenisHewan) {
+            return redirect()->route('admin.jenis-hewan.index')
+                ->with('error', 'Data Jenis Hewan tidak ditemukan.');
+        }
+
+        return view('admin.jenis-hewan.edit', compact('jenisHewan'));
+    }
+
+    public function update(Request $request, $id){
+    
+        $validatedData = $this->validateJenisHewan($request, $id);
+
+        try {
+
+            DB::table('jenis_hewan')
+                ->where('idjenis_hewan', $id)
+                ->update([
+                    'nama_jenis_hewan' => $this->formatNamaJenisHewan($validatedData['nama_jenis_hewan']),
+                ]);
+
+            return redirect()->route('admin.jenis-hewan.index')
+                ->with('success', 'Jenis Hewan berhasil diupdate.');
+
+        } catch (\Exception $e) {
+            return redirect()->route('admin.jenis-hewan.index')
+                ->with('error', 'Gagal mengupdate data: ' . $e->getMessage());
+        }
+    }
+
+    public function destroy($id){
+        try {
+
+            DB::table('jenis_hewan')
+                ->where('idjenis_hewan', $id)
+                ->delete();
+
+            return redirect()->route('admin.jenis-hewan.index')
+                ->with('success', 'Jenis Hewan berhasil dihapus.');
+
+        } catch (\Exception $e) {
+            return redirect()->route('admin.jenis-hewan.index')
+                ->with('error', 'Gagal menghapus data: ' . $e->getMessage());
+        }
     }
 
     

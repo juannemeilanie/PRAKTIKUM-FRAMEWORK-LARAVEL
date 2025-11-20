@@ -1,25 +1,25 @@
+@extends('layouts.lte.main')
 
+@section('content')
 <!DOCTYPE html>
 <html>
 <head>
     <title>Data Master - Pet</title>
     <style>
-        tr { text-align: center; }
-        body { font-family: Arial, sans-serif; background: #f4f4f4; padding:20px; }
-        h2 { color: #333; }
-        table { width:50%; border-collapse: collapse; margin-top:20px; }
+        tr { text-align: center;}
         th, td { border:1px solid #000000ff; padding:10px; text-align:left; }
-        th { background:#8f93d8ff; }
-        button { background: #2f3c93ff;; border:none; padding:10px 15px; border-radius:5px; color:#fff; cursor:pointer; }
-        button:hover { background: #1e265cff;; }
-        a{color: #ffffffff;}
+        th { background:#8f93d8ff;}
     </style>
 </head>
 <body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="card">
     <h2>Pemilik</h2>
-    <table border="1" cellpadding="8" cellspacing="0">
-        <button><a href="{{ route('admin.pemilik.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Pemilik</a></button>
-        <button><a href="{{ route('admin.data_master') }}" class="btn btn-secondary w-100 fw-bold">Kembali</a></button>
+    <table>
+        <div class="d-flex justify-content-between">
+            <a href="{{ route('admin.pemilik.create') }}" class="btn btn-secondary"><i class="fas fa-plus"></i> Tambah Pemilik</a>
+        </div>
         <thead>
             <tr>
                 <th>No</th>
@@ -34,18 +34,18 @@
             @foreach ($pemilik as $index => $item)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $item->user->nama }}</td>
+                <td>{{ $item->nama }}</td>
                 <td>{{ $item->email }}</td>
                 <td>{{ $item->no_wa }}</td>
                 <td>{{ $item->alamat }}</td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                    <button type="button" class="btn btn-sm btn-warning" onclick="window.location='{{ route('admin.pemilik.edit', $item->idpemilik)}}'">
                         <i class="fas fa-edit"></i> Edit
                     </button>
                     <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Apakah Anda yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $item->idpemilik }}').submit(); }">
                         <i class="fas fa-trash"></i> Hapus
                     </button>
-                    <form id="delete-form-{{ $item->idpemilik }}" action="#" method="POST" style="display: none;">
+                    <form id="delete-form-{{ $item->idpemilik }}" action="{{ route('admin.pemilik.destroy', $item->idpemilik)}}" method="POST" style="display: none;">
                         @csrf
                         @method('DELETE')
                     </form>
@@ -55,3 +55,4 @@
         </tbody>
     </table>
 </body>
+@endsection

@@ -36,7 +36,7 @@
                         </span>
                         <div class="info-box-content">
                             <span class="info-box-text">Total Rekam Medis</span>
-                            <span class="info-box-number">150</span>
+                            <span class="info-box-number">0</span>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                         </span>
                         <div class="info-box-content">
                             <span class="info-box-text">Total Hewan</span>
-                            <span class="info-box-number">320</span>
+                            <span class="info-box-number">10</span>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                         </span>
                         <div class="info-box-content">
                             <span class="info-box-text">Total Pemilik</span>
-                            <span class="info-box-number">85</span>
+                            <span class="info-box-number">10</span>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 
-<?php $__env->startSection('title', 'Tambah Pet'); ?>
+
 <?php $__env->startSection('content'); ?>
 <div class="container">
     <div class="row justify-content-center">
@@ -9,17 +9,21 @@
                     <h4>Tambah Pet</h4>
                 </div>
                 <div class="card-body">
-                    <?php if(session('error')): ?>
+                    <?php if($errors->any()): ?>
                         <div class="alert alert-danger">
-                            <?php echo e(session('error')); ?>
-
+                            <ul>
+                                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </ul>
                         </div>
                     <?php endif; ?>
 
-                    <form method="POST" action="<?php echo e(route('admin.kode-tindakan.store')); ?>">
+
+                    <form method="POST" action="<?php echo e(route('admin.pet.store')); ?>">
                         <?php echo csrf_field(); ?>
 
-                                            <div class="mb-3">
+                        <div class="mb-3">
                             <label for="nama" class="form-label">Nama <span class="text-danger">*</span></label>
                             <input  type="text" 
                                     id="nama" 
@@ -220,4 +224,4 @@ unset($__errorArgs, $__bag); ?>
 </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\laravel\laravelrshp\resources\views/admin/pet/tambah.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.lte.main', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\laravel\laravelrshp\resources\views/admin/pet/tambah.blade.php ENDPATH**/ ?>

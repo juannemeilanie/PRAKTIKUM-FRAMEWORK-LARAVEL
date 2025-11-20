@@ -2,75 +2,85 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\RasHewan;
-use App\Models\JenisHewan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class RasHewanController extends Controller
 {
     public function index(){
-        $rashewan = RasHewan::all();
-        return view('admin.ras-hewan.index', compact('rashewan'));
+        $rasHewan = DB::table('ras_hewan')
+            ->join('jenis_hewan', 'ras_hewan.idjenis_hewan', '=', 'jenis_hewan.idjenis_hewan')
+            ->select('ras_hewan.*', 'jenis_hewan.nama_jenis_hewan')
+            ->get();
+
+        return view('admin.ras-hewan.index', compact('rasHewan'));
     }
 
     public function create(){
-        return view('admin.ras-hewan.tambah',[
-            'jenishewan' => JenisHewan::all(),
-        ]);
+        $jenisHewan = DB::table('jenis_hewan')->get();
+        return view('admin.ras-hewan.tambah', compact('jenisHewan'));
     }
 
     public function store(Request $request){
         $validatedData = $this->validateRasHewan($request);
 
-        $rashewan = $this->createRasHewan($validatedData);
+        DB::table('ras_hewan')->insert([
+            'nama_ras' => $this->formatNamaRasHewan($validatedData['nama_ras']),
+            'idjenis_hewan' => $validatedData['idjenis_hewan'],
+        ]);
 
         return redirect()->route('admin.ras-hewan.index')
                         ->with('success', 'Ras Hewan berhasil ditambahkan.');
     }
 
     protected function validateRasHewan(Request $request, $id = null){
+        $uniqueRule = $id
+            ? 'unique:ras_hewan,nama_ras,' . $id . ',idras_hewan'
+            : 'unique:ras_hewan,nama_ras';
 
-        //data bersifat unik
-        $uniqueRule = $id ?
-            'unique:ras_hewan,nama_ras,' . $id . ',idras_hewan' :
-            'unique:ras_hewan,nama_ras';
-
-        //validasi input
         return $request->validate([
             'nama_ras' => [
-                'required', 
-                'string', 
-                'max:255', 
-                'min:3', 
+                'required',
+                'string',
+                'max:255',
+                'min:3',
                 $uniqueRule
             ],
-            'jenis_hewan_id' => [
+            'idjenis_hewan' => [
                 'required',
                 'exists:jenis_hewan,idjenis_hewan'
             ]
-        ], [
-            'nama_ras.required' => 'Nama Ras Hewan wajib diisi.',
-            'nama_ras.string' => 'Nama Ras Hewan harus berupa teks.',
-            'nama_ras.max' => 'Nama Ras Hewan maksimal 255 karakter.',
-            'nama_ras.min' => 'Nama Ras Hewan minimal 3 karakter.',
-            'nama_ras.unique' => 'Nama Ras Hewan sudah ada.',
-
-            // jenishewan_id
-            'jenis_hewan_id.required' => 'Jenis Hewan Klinis wajib dipilih.',
-            'jenis_hewan_id.exists' => 'Jenis Hewan Klinis tidak valid.',
         ]);
     }
 
-    //helper untuk membuat data baru
-    protected function createRasHewan(array $data){
-        try{
-            return RasHewan::create([
-                'nama_ras' => $this->formatNamaRasHewan($data['nama_ras']),   
-            ]);
-        } catch (\Exception $e){
-            // Tangani kesalahan jika diperlukan    
-            throw new \Exception('Gagal membuat Ras Hewan: ' . $e->getMessage());
-        }
+    public function edit($id){
+        $ras = DB::table('ras_hewan')->where('idras_hewan', $id)->first();
+        $jenisHewan = DB::table('jenis_hewan')->get();
+
+        return view('admin.ras-hewan.edit', compact('ras', 'jenisHewan'));
+    }
+
+    public function update(Request $request, $id){
+        $validatedData = $this->validateRasHewan($request, $id);
+
+        DB::table('ras_hewan')->where('idras_hewan', $id)->update([
+            'nama_ras' => $this->formatNamaRasHewan($validatedData['nama_ras']),
+            'idjenis_hewan' => $validatedData['idjenis_hewan'],
+        ]);
+
+        return redirect()->route('admin.ras-hewan.index')
+                        ->with('success', 'Ras Hewan berhasil diperbarui.');
+    }
+
+    public function destroy($id){
+        DB::table('ras_hewan')->where('idras_hewan', $id)->delete();
+
+        return redirect()->route('admin.ras-hewan.index')
+                        ->with('success', 'Ras Hewan berhasil dihapus.');
+    }
+
+    protected function formatNamaRasHewan($nama){
+        return trim(ucwords(strtolower($nama)));
     }
 }

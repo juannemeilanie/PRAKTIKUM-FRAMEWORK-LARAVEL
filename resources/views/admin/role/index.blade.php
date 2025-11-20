@@ -1,4 +1,6 @@
+@extends('layouts.lte.main')
 
+@section('content')
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +20,7 @@
 <body>
     <h2>Data Master - Role</h2>
     <table>
-        <button><a href="{{ route('admin.data_master') }}" class="btn btn-secondary w-100 fw-bold">Kembali</a></button>
+        <button><a href="{{ route('admin.dashboard') }}" class="btn btn-secondary w-100 fw-bold">Kembali</a></button>
         <thead>
             <tr>
                 <th>ID</th>
@@ -37,3 +39,4 @@
             @endforeach
         </tbody>
     </table>
+@endsection

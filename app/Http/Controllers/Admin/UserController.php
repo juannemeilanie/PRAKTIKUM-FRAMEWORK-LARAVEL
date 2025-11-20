@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
     public function index(){
-        $users = User::all();
+        $users = DB::table('user')->get();
         return view('admin.user.index', compact('users'));
     }
 
@@ -20,44 +20,40 @@ class UserController extends Controller
     public function store(Request $request){
         $validatedData = $this->validateUser($request);
 
-        $users = $this->createUser($validatedData);
+        $this->createUser($validatedData);
 
         return redirect()->route('admin.user.index')
                         ->with('success', 'User berhasil ditambahkan.');
     }
 
-    protected function validateUser(Request $request, $id = null){
+    protected function validateUser(Request $request, $id = null)
+    {
+        $uniqueRule = $id
+            ? 'unique:user,nama,' . $id . ',iduser'
+            : 'unique:user,nama';
 
-        //data bersifat unik
-        $uniqueRule = $id ?
-            'unique:user,nama,' . $id . ',iduser' :
-            'unique:user,nama';
-
-        //validasi input
         return $request->validate([
-            'nama' => [
-                'required', 
-                'string', 
-                'max:255', 
-                'min:5', 
-                $uniqueRule
-            ],
+            'nama' => ['required', 'string', $uniqueRule],
+            'email' => ['required', 'email'],
+            'password' => $id ? [] : ['required'],
         ], [
             'nama.required' => 'Nama User wajib diisi.',
-            'nama.string' => 'Nama Jenis Hewan harus berupa teks.',
-            'nama.max' => 'Nama Jenis Hewan maksimal 255 karakter.',
-            'nama.min' => 'Nama Jenis Hewan minimal 5 karakter.',
-            'nama.unique' => 'Nama Jenis Hewan sudah ada.',
+            'nama.string' => 'Nama User harus berupa teks.',
+            'nama.unique' => 'Nama User sudah ada.',
+            'email.required' => 'Email harus diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Password harus diisi saat tambah user.',
         ]);
     }
 
     protected function createUser(array $data){
         try{
-            return User::create([
-                'nama' => $this->formatNamaUser($data['nama']),   
+            return DB::table('user')->insert([
+                'nama'      => $this->formatNamaUser($data['nama']),
+                'email'     => $data['email'],
+                'password'  => bcrypt($data['password']),
             ]);
         } catch (\Exception $e){
-            // Tangani kesalahan jika diperlukan
             throw new \Exception('Gagal menyimpan User: ' . $e->getMessage());
         }
     }
@@ -65,13 +61,34 @@ class UserController extends Controller
     protected function formatNamaUser($nama){
         return ucwords(strtolower(trim($nama)));
     }
-    
-    public function destroy($id){
-        $user = User::findOrFail($id);
-        $user->delete();
 
-        return redirect()->route('admin.user.index')->with('success', 'User berhasil dihapus.');
+    public function edit($id){
+        $users = DB::table('user')->where('iduser', $id)->first();
+        return view('admin.user.edit', compact('users'));
     }
 
+    public function update(Request $request, $id){
+        $validatedData = $this->validateUser($request, $id);
 
+        $updateData = [
+            'nama'  => $this->formatNamaUser($validatedData['nama']),
+            'email' => $validatedData['email'],
+        ];
+
+        if (!empty($validatedData['password'])) {
+            $updateData['password'] = bcrypt($validatedData['password']);
+        }
+
+        DB::table('user')->where('iduser', $id)->update($updateData);
+
+        return redirect()->route('admin.user.index')
+                        ->with('success', 'User berhasil diperbarui.');
+    }
+
+    public function destroy($id){
+        DB::table('user')->where('iduser', $id)->delete();
+
+        return redirect()->route('admin.user.index')
+                        ->with('success', 'User berhasil dihapus.');
+    }
 }

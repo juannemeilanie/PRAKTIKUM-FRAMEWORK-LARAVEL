@@ -49,42 +49,66 @@ Route::middleware('isAdministrator')->prefix('admin')->name('admin.')->group(fun
     Route::get('/user-role', [RoleUserController::class, 'index'])->name('user-role.index');
     Route::get('/user-role/create', [RoleUserController::class, 'create'])->name('user-role.create');
     Route::post('/user-role/store', [RoleUserController::class, 'store'])->name('user-role.store');
+    Route::get('/user-role/edit/{id}', [RoleUserController::class, 'edit'])->name('user-role.edit');
+    Route::put('/user-role/update/{id}', [RoleUserController::class, 'update'])->name('user-role.update');
+    Route::delete('/user-role/destroy/{id}', [RoleUserController::class, 'destroy'])->name('user-role.destroy');
 
     //Jenis Hewan
     Route::get('/jenis-hewan', [JenisHewanController::class, 'index'])->name('jenis-hewan.index');
     Route::get('/jenis-hewan/create', [JenisHewanController::class, 'create'])->name('jenis-hewan.create');
     Route::post('/jenis-hewan/store', [JenisHewanController::class, 'store'])->name('jenis-hewan.store');
+    Route::get('/jenis-hewan/edit/{id}', [JenisHewanController::class, 'edit'])->name('jenis-hewan.edit');
+    Route::put('/jenis-hewan/update/{id}', [JenisHewanController::class, 'update'])->name('jenis-hewan.update');
+    Route::delete('/jenis-hewan/destroy/{id}', [JenisHewanController::class, 'destroy'])->name('jenis-hewan.destroy');
 
     //Ras Hewan
     Route::get('/ras-hewan', [RasHewanController::class, 'index'])->name('ras-hewan.index');
     Route::get('/ras-hewan/create', [RasHewanController::class, 'create'])->name('ras-hewan.create');
     Route::post('/ras-hewan/store', [RasHewanController::class, 'store'])->name('ras-hewan.store');
+    Route::get('/ras-hewan/edit/{id}', [RasHewanController::class, 'edit'])->name('ras-hewan.edit');
+    Route::put('/ras-hewan/update/{id}', [RasHewanController::class, 'update'])->name('ras-hewan.update');
+    Route::delete('/ras-hewan/destroy/{id}', [RasHewanController::class, 'destroy'])->name('ras-hewan.destroy');
 
     //Pemilik
     Route::get('/pemilik', [PemilikController::class, 'index'])->name('pemilik.index');
     Route::get('/pemilik/create', [PemilikController::class, 'create'])->name('pemilik.create');
     Route::post('/pemilik/store', [PemilikController::class, 'store'])->name('pemilik.store');
+    Route::get('/pemilik/edit/{id}', [PemilikController::class, 'edit'])->name('pemilik.edit');
+    Route::put('/pemilik/update/{id}', [PemilikController::class, 'update'])->name('pemilik.update');
+    Route::delete('/pemilik/destroy/{id}', [PemilikController::class, 'destroy'])->name('pemilik.destroy');
 
     //Pet
     Route::get('/pet', [PetController::class, 'index'])->name('pet.index');
     Route::get('/pet/create', [PetController::class, 'create'])->name('pet.create');
-    Route::post('/pet/store', [PetController::class, 'store'])->name('pet.store');  
+    Route::post('/pet/store', [PetController::class, 'store'])->name('pet.store');
+    Route::get('/pet/edit/{id}', [PetController::class, 'edit'])->name('pet.edit');
+    Route::put('/pet/update/{id}', [PetController::class, 'update'])->name('pet.update');
+    Route::delete('/pet/destroy/{id}', [PetController::class, 'destroy'])->name('pet.destroy');  
    
 
     //Kategori
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
     Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
-    Route::post('/kategori/store', [KategoriController::class, 'store'])->name('kategori.store');  
+    Route::post('/kategori/store', [KategoriController::class, 'store'])->name('kategori.store');
+    Route::get('/kategori/edit/{id}', [KategoriController::class, 'edit'])->name('kategori.edit');
+    Route::put('/kategori/update/{id}', [KategoriController::class, 'update'])->name('kategori.update');
+    Route::delete('/kategori/destroy/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');  
 
     //Kategori Klinis
     Route::get('/kategori-klinis', [KategoriKlinisController::class, 'index'])->name('kategori-klinis.index');
     Route::get('/kategori-klinis/create', [KategoriKlinisController::class, 'create'])->name('kategori-klinis.create');
     Route::post('/kategori-klinis/store', [KategoriKlinisController::class, 'store'])->name('kategori-klinis.store');
+    Route::get('/kategori-klinis/edit/{id}', [KategoriKlinisController::class, 'edit'])->name('kategori-klinis.edit');
+    Route::put('/kategori-klinis/update/{id}', [KategoriKlinisController::class, 'update'])->name('kategori-klinis.update');
+    Route::delete('/kategori-klinis/destroy/{id}', [KategoriKlinisController::class, 'destroy'])->name('kategori-klinis.destroy');
 
     //Kode Tindakan
     Route::get('/kode-tindakan', [KodeTindakanController::class, 'index'])->name('kode-tindakan.index');
     Route::get('/kode-tindakan/create', [KodeTindakanController::class, 'create'])->name('kode-tindakan.create');
     Route::post('/kode-tindakan/store', [KodeTindakanController::class, 'store'])->name('kode-tindakan.store');
+    Route::get('/kode-tindakan/edit/{id}', [KodeTindakanController::class, 'edit'])->name('kode-tindakan.edit');
+    Route::put('/kode-tindakan/update/{id}', [KodeTindakanController::class, 'update'])->name('kode-tindakan.update');
+    Route::get('/kode-tindakan/destory/{id}', [KodeTindakanController::class, 'destroy'])->name('kode-tindakan.destroy');
 });
 
 //Dokter

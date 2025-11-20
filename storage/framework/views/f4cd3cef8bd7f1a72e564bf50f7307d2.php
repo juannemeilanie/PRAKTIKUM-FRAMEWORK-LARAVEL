@@ -1,24 +1,26 @@
+
+
+<?php $__env->startSection('content'); ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Data Master - Pet</title>
     <style>
-        tr { text-align: center; }
-        body { font-family: Arial, sans-serif; background: #f4f4f4; padding:20px; }
-        h2 { color: #333; }
-        table { width:50%; border-collapse: collapse; margin-top:20px; }
+        tr { text-align: center;}
         th, td { border:1px solid #000000ff; padding:10px; text-align:left; }
-        th { background:#8f93d8ff; }
-        button { background: #2f3c93ff;; border:none; padding:10px 15px; border-radius:5px; color:#fff; cursor:pointer; }
-        button:hover { background: #1e265cff;; }
-        a{color: #ffffffff;}
+        th { background:#8f93d8ff;}
     </style>
 </head>
 <body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="card">
     <h2>Pet</h2>
+
     <table>
-        <button><a href ="<?php echo e(route('admin.pet.create')); ?>"  method="POST" class="btn btn-danger w-100 fw-bold">Tambah Pet</a></button>
-        <button><a href="<?php echo e(route('admin.data_master')); ?>" class="btn btn-secondary w-100 fw-bold">Kembali</a></button>
+        <div class="d-flex justify-content-between">
+            <a href ="<?php echo e(route('admin.pet.create')); ?>"  method="POST" class="btn btn-secondary">Tambah Pet</a>
+        </div>
         <thead>
             <tr>
                 <th>Nama Pet</th>
@@ -40,13 +42,13 @@
                 <td><?php echo e($pet->pemilik->user->nama); ?></td>
                 <td><?php echo e($pet->rasHewan->nama_ras); ?></td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                    <button type="button" class="btn btn-sm btn-warning" onclick="window.location='<?php echo e(route('admin.pet.edit', $pet->idpet)); ?>'">
                         <i class="fas fa-edit"></i> Edit
                     </button>
                     <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Apakah Anda yakin ingin menghapus data ini?')) { document.getElementById('delete-form-<?php echo e($pet->idpet); ?>').submit(); }">
                         <i class="fas fa-trash"></i> Hapus
                     </button>
-                    <form id="delete-form-<?php echo e($pet->idpet); ?>" action="#" method="POST" style="display: none;">
+                    <form id="delete-form-<?php echo e($pet->idpet); ?>" action="<?php echo e(route('admin.pet.destroy', $pet->idpet)); ?>" method="POST" style="display: none;">
                         <?php echo csrf_field(); ?>
                         <?php echo method_field('DELETE'); ?>
                     </form>                    
@@ -55,4 +57,6 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </tbody>
     </table>
-</body><?php /**PATH C:\laragon\www\laravel\laravelrshp\resources\views/admin/pet/index.blade.php ENDPATH**/ ?>
+</body>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.lte.main', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\laravel\laravelrshp\resources\views/admin/pet/index.blade.php ENDPATH**/ ?>

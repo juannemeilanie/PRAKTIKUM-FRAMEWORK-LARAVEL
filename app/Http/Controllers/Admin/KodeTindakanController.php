@@ -2,23 +2,32 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Kategori;
-use App\Models\KodeTindakan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Kategori;
 use App\Models\KategoriKlinis;
 use App\Http\Controllers\Controller;
 
 class KodeTindakanController extends Controller
 {
     public function index(){
-        $kodetindakan = KodeTindakan::all();
-        return view('admin.kode-tindakan.index', compact('kodetindakan'));
+    $kodetindakan = DB::table('kode_tindakan_terapi as kt')
+        ->join('kategori as k', 'kt.idkategori', '=', 'k.idkategori')
+        ->join('kategori_klinis as kk', 'kt.idkategori_klinis', '=', 'kk.idkategori_klinis')
+        ->select(
+            'kt.*',
+            'k.nama_kategori',
+            'kk.nama_kategori_klinis'
+        )
+        ->get();
+
+    return view('admin.kode-tindakan.index', compact('kodetindakan'));
     }
 
     public function create(){
         return view('admin.kode-tindakan.tambah', [
-            'kategori' => Kategori::all(),
-            'kategoriKlinis' => KategoriKlinis::all(), 
+            'kategori' => DB::table('kategori')->get(),
+            'kategoriKlinis' => DB::table('kategori_klinis')->get(),
         ]);
     }
 
@@ -32,63 +41,101 @@ class KodeTindakanController extends Controller
     }
 
     protected function validateKodeTindakan(Request $request){
-        $uniqueRule = $id ?
-            'unique:kode_tindakan_terapi,' . $id . ',idkode_tindakan_terapi':
-            'unique:kode_tindakan_terapi';
-
-        //validasi input
         return $request->validate([
-            'kode_tindakan' => [
-                'required', 
-                'string', 
-                'max:10', 
-                'min:3', 
-                $uniqueRule
+            'kode' => [
+                'required',
+                'string',
+                'max:5',
+                'unique:kode_tindakan_terapi,kode'
             ],
-            'nama_tindakan' => [
-                'required', 
-                'string', 
-                'max:255', 
-                'min:3'
+            'deskripsi_tindakan_terapi' => [
+                'required',
+                'string',
+                'max:1000'
             ],
-            'kategori_id' => [
-                'required', 
+            'idkategori' => [
+                'required',
                 'exists:kategori,idkategori'
             ],
-            'kategori_klinis_id' => [
-                'required', 
+            'idkategori_klinis' => [
+                'required',
                 'exists:kategori_klinis,idkategori_klinis'
             ],
-        ], [
-            'kode_tindakan.required' => 'Kode Tindakan wajib diisi.',
-            'kode_tindakan.string' => 'Kode Tindakan harus berupa teks.',
-            'kode_tindakan.max' => 'Kode Tindakan maksimal 10 karakter.',
-            'kode_tindakan.min' => 'Kode Tindakan minimal 3 karakter.',
-            'kode_tindakan.unique' => 'Kode Tindakan sudah digunakan.',
-
-            // nama_tindakan
-            'nama_tindakan.required' => 'Nama Tindakan wajib diisi.',
-            'nama_tindakan.string' => 'Nama Tindakan harus berupa teks.',
-            'nama_tindakan.max' => 'Nama Tindakan maksimal 255 karakter.',
-            'nama_tindakan.min' => 'Nama Tindakan minimal 3 karakter.',
-
-            // kategori_id
-            'kategori_id.required' => 'Kategori wajib dipilih.',
-            'kategori_id.exists' => 'Kategori tidak valid.',
-
-            // kategori_klinis_id
-            'kategori_klinis_id.required' => 'Kategori Klinis wajib dipilih.',
-            'kategori_klinis_id.exists' => 'Kategori Klinis tidak valid.',
         ]);
     }
 
-    // protected function createKodeTindakan(array $data){
-    //     try{
-    //         return KodeTindakan::create([
-    //             ''
-    //         ]);
-    //     } catch (\Exception $e){
-    //         //
-    //     }
-    // }
+
+    protected function createKodeTindakan(array $data){
+        try {
+            return DB::table('kode_tindakan_terapi')->insert([
+                'kode' => strtoupper($data['kode']),
+                'deskripsi_tindakan_terapi' => $data['deskripsi_tindakan_terapi'],
+                'idkategori' => $data['idkategori'],
+                'idkategori_klinis' => $data['idkategori_klinis'],
+            ]);
+        } catch (\Exception $e) {
+            throw new \Exception('Gagal menyimpan kode tindakan: ' . $e->getMessage());
+        }
+    }
+
+
+    public function edit($id){
+        $kodetindakan = DB::table('kode_tindakan_terapi')
+                            ->where('idkode_tindakan_terapi', $id)
+                            ->first();
+
+        return view('admin.kode-tindakan.edit', [
+            'kodetindakan' => $kodetindakan,
+            'kategori' => DB::table('kategori')->get(),
+            'kategoriKlinis' => DB::table('kategori_klinis')->get(),
+        ]);
+    }
+
+    public function update(Request $request, $id){
+        // Validasi update → abaikan ID sendiri
+        $request->validate([
+            'kode' => [
+                'required',
+                'string',
+                'max:10',
+                'min:3',
+                'unique:kode_tindakan_terapi,kode,' . $id . ',idkode_tindakan_terapi'
+            ],
+            'deskripsi_tindakan_terapi' => [
+                'required',
+                'string',
+                'max:255',
+                'min:3'
+            ],
+            'idkategori' => [
+                'required',
+                'exists:kategori,idkategori'
+            ],
+            'idkategori_klinis' => [
+                'required',
+                'exists:kategori_klinis,idkategori_klinis'
+            ],
+        ]);
+
+        DB::table('kode_tindakan_terapi')
+            ->where('idkode_tindakan_terapi', $id)
+            ->update([
+                'kode' => strtoupper($request->kode),
+                'deskripsi_tindakan_terapi' => $request->deskripsi_tindakan_terapi,
+                'idkategori' => $request->idkategori,
+                'idkategori_klinis' => $request->idkategori_klinis,
+            ]);
+
+        return redirect()->route('admin.kode-tindakan.index')
+                        ->with('success', 'Kode Tindakan berhasil diperbarui.');
+    }
+
+    public function destroy($id){
+        DB::table('kode_tindakan_terapi')
+            ->where('idkode_tindakan_terapi', $id)
+            ->delete();
+
+        return redirect()->route('admin.kode-tindakan.index')
+                        ->with('success', 'Kode Tindakan berhasil dihapus.');
+    }
 }

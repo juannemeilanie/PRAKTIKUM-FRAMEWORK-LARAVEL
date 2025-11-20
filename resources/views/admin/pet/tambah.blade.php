@@ -1,5 +1,5 @@
-@extends('layouts.app')
-@section('title', 'Tambah Pet')
+@extends('layouts.lte.main')
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -9,16 +9,21 @@
                     <h4>Tambah Pet</h4>
                 </div>
                 <div class="card-body">
-                    @if (session('error'))
+                    @if ($errors->any())
                         <div class="alert alert-danger">
-                            {{ session('error') }}
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('admin.kode-tindakan.store') }}">
+
+                    <form method="POST" action="{{ route('admin.pet.store') }}">
                         @csrf
 
-                                            <div class="mb-3">
+                        <div class="mb-3">
                             <label for="nama" class="form-label">Nama <span class="text-danger">*</span></label>
                             <input  type="text" 
                                     id="nama" 

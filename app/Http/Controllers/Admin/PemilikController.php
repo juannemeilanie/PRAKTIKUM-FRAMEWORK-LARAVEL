@@ -2,84 +2,74 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Pemilik;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class PemilikController extends Controller
 {
     public function index(){
-        $pemilik = Pemilik::with('user')->get();
+        $pemilik = DB::table('pemilik')
+            ->join('user', 'user.iduser', '=', 'pemilik.iduser')
+            ->select('pemilik.*', 'user.nama', 'user.email')
+            ->get();
+
         return view('admin.pemilik.index', compact('pemilik'));
     }
 
     public function create(){
-        return view('admin.pemilik.tambah');
+        $users = User::all();
+        return view('admin.pemilik.tambah', compact('users'));
     }
 
     public function store(Request $request){
-        $validatedData = $this->validatePemilik($request);
+        $request->validate([
+            'iduser' => 'required',
+            'no_wa' => 'required|string|min:10|max:15',
+            'alamat' => 'required|string',
+        ]);
 
-        $pemilik = $this->createPemilik($validatedData);
+        DB::table('pemilik')->insert([
+            'iduser' => $request->iduser,
+            'no_wa' => $request->no_wa,
+            'alamat' => $request->alamat,
+        ]);
 
         return redirect()->route('admin.pemilik.index')
-                        ->with('success', 'Pemilik berhasil ditambahkan.');
+            ->with('success', 'Pemilik berhasil ditambahkan.');
     }
 
-    protected function validatePemilik(Request $request){
+    public function edit($id){
+        $pemilik = DB::table('pemilik')->where('idpemilik', $id)->first();
+        $users = User::all();
 
-        //validasi input
-        return $request->validate([
-            'nama_pemilik' => [
-                'required', 
-                'string', 
-                'max:255', 
-                'min:3'
-            ],
-            'no_wa' => [
-                'required', 
-                'string', 
-                'max:15', 
-                'min:10'
-            ],
-            'alamat' => [
-                'required', 
-                'string', 
-                'max:500', 
-                'min:10'
-            ],
-        ], [
-            'nama_pemilik.required' => 'Nama Pemilik wajib diisi.',
-            'nama_pemilik.string' => 'Nama Pemilik harus berupa teks.',
-            'nama_pemilik.max' => 'Nama Pemilik maksimal 255 karakter.',
-            'nama_pemilik.min' => 'Nama Pemilik minimal 3 karakter.',
+        return view('admin.pemilik.edit', compact('pemilik', 'users'));
+    }
 
-            // no_wa
-            'no_wa.required' => 'No WA wajib diisi.',
-            'no_wa.string' => 'No WA harus berupa teks.',
-            'no_wa.max' => 'No WA maksimal 15 karakter.',
-            'no_wa.min' => 'No WA minimal 10 karakter.',
-            // alamat
-            'alamat.required' => 'Alamat wajib diisi.',
-            'alamat.string' => 'Alamat harus berupa teks.',
-            'alamat.max' => 'Alamat maksimal 500 karakter.',
-            'alamat.min' => 'Alamat minimal 10 karakter.',
+    public function update(Request $request, $id){
+        $request->validate([
+            'iduser' => 'required',
+            'no_wa' => 'required|string|min:10|max:15',
+            'alamat' => 'required|string',
         ]);
-    }
 
-    protected function createPemilik(array $data){
-        try{
-            return Pemilik::create([
-                'nama_pemilik' => $data['nama_pemilik'],
-                'no_wa' => $data['no_wa'],
-                'alamat' => $data['alamat'],
+        DB::table('pemilik')
+            ->where('idpemilik', $id)
+            ->update([
+                'iduser' => $request->iduser,
+                'no_wa' => $request->no_wa,
+                'alamat' => $request->alamat,
             ]);
-        } catch (\Exception $e) {
-            throw new \Exception('Gagal menyimpan data pemilik:' . $e->getMessage());
-        }
+
+        return redirect()->route('admin.pemilik.index')
+            ->with('success', 'Pemilik berhasil diperbarui.');
     }
 
-    protected function formatNamaPemilik($nama){
-        return trim(ucwords(strtolower($nama)));
+    public function destroy($id){
+        DB::table('pemilik')->where('idpemilik', $id)->delete();
+
+        return redirect()->route('admin.pemilik.index')
+            ->with('success', 'Pemilik berhasil dihapus.');
     }
 }
