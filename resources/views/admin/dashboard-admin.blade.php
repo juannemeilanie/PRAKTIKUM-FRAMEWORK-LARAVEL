@@ -60,7 +60,7 @@
                         </span>
                         <div class="info-box-content">
                             <span class="info-box-text">Total Pemilik</span>
-                            <span class="info-box-number">10</span>
+                            <span class="info-box-number">2</span>
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                         </span>
                         <div class="info-box-content">
                             <span class="info-box-text">Total User</span>
-                            <span class="info-box-number">12</span>
+                            <span class="info-box-number">7</span>
                         </div>
                     </div>
                 </div>
