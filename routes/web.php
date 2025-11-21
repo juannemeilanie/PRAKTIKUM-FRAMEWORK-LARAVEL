@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\PetController;
 use App\Http\Controllers\Site\SiteController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\DokterController;
 use App\Http\Controllers\Admin\PemilikController;
+use App\Http\Controllers\Admin\PerawatController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\RasHewanController;
 use App\Http\Controllers\Admin\RoleUserController;
@@ -109,6 +111,23 @@ Route::middleware('isAdministrator')->prefix('admin')->name('admin.')->group(fun
     Route::get('/kode-tindakan/edit/{id}', [KodeTindakanController::class, 'edit'])->name('kode-tindakan.edit');
     Route::put('/kode-tindakan/update/{id}', [KodeTindakanController::class, 'update'])->name('kode-tindakan.update');
     Route::get('/kode-tindakan/destory/{id}', [KodeTindakanController::class, 'destroy'])->name('kode-tindakan.destroy');
+
+    //Data Dokter
+    Route::get('/dokter', [DokterController::class, 'index'])->name('dokter.index');
+    Route::get('/dokter/create', [DokterController::class, 'create'])->name('dokter.create');
+    Route::post('/dokter/store', [DokterController::class, 'store'])->name('dokter.store');
+    Route::get('/dokter/edit/{id}', [DokterController::class, 'edit'])->name('dokter.edit');
+    Route::put('/dokter/update/{id}', [DokterController::class, 'update'])->name('dokter.update');
+    Route::get('/dokter/destory/{id}', [DokterController::class, 'destroy'])->name('dokter.destroy');
+
+    //Data Perawat
+    Route::get('/perawat', [PerawatController::class, 'index'])->name('perawat.index');
+    Route::get('/perawat/create', [PerawatController::class, 'create'])->name('perawat.create');
+    Route::post('/perawat/store', [PerawatController::class, 'store'])->name('perawat.store');
+    Route::get('/perawat/edit/{id}', [PerawatController::class, 'edit'])->name('perawat.edit');
+    Route::put('/perawat/update/{id}', [PerawatController::class, 'update'])->name('perawat.update');
+    Route::get('/perawat/destory/{id}', [PerawatController::class, 'destroy'])->name('perawat.destroy');
+
 });
 
 //Dokter

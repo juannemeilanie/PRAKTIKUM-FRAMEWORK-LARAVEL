@@ -94,6 +94,20 @@
                                 <p>Kode Tindakan Terapi</p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.dokter.index') }}"  class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Data Dokter</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.perawat.index') }}"  class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Data Perawat</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
