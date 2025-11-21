@@ -137,6 +137,14 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item menu-open">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-danger" >
+                            Logout
+                        </button>
+                    </form>
+                </li>
             </ul>
             <!--end::Sidebar Menu-->
         </nav>

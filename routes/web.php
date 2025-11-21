@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\PetController;
 use App\Http\Controllers\Site\SiteController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\DokterController;
 use App\Http\Controllers\Admin\PemilikController;
 use App\Http\Controllers\Admin\PerawatController;
@@ -27,12 +29,14 @@ Route::get('/', [SiteController::class, 'home'])->name('site.home');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 //Site
 Route::get('/site/struktur', [SiteController::class, 'struktur'])->name('site.struktur');
 Route::get('/site/layanan', [SiteController::class, 'layanan'])->name('site.layanan');
 Route::get('/site/visimisi', [SiteController::class, 'visimisi'])->name('site.visimisi');
 Route::get('/login', [SiteController::class, 'login'])->name('login');
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Admin
 Route::middleware('isAdministrator')->prefix('admin')->name('admin.')->group(function () {
