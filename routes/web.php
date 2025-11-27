@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\PetController;
@@ -19,8 +20,11 @@ use App\Http\Controllers\Perawat\RekamMedisController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriKlinisController;
 use App\Http\Controllers\Dokter\DashboardDokterController;
+use App\Http\Controllers\Resepsionis\TemuDokterController;
 use App\Http\Controllers\Pemilik\DashboardPemilikController;
 use App\Http\Controllers\Perawat\DashboardPerawatController;
+use App\Http\Controllers\Resepsionis\ResepsionisPetController;
+use App\Http\Controllers\Resepsionis\ResepsionisPemilikController;
 use App\Http\Controllers\Resepsionis\DashboardResepsionisController;
 
 
@@ -137,6 +141,13 @@ Route::middleware('isAdministrator')->prefix('admin')->name('admin.')->group(fun
 //Dokter
 Route::middleware('isDokter')->group(function () {
     Route::get('/dokter/dashboard', [DashboardDokterController::class, 'index'])->name('dokter.dashboard');
+
+    Route::prefix('dokter.rekam_medis')->group(function () {
+        Route::get('/', [RekamMedisController::class, 'index'])->name('dokter.rekam_medis.index');
+        Route::get('/create', [RekamMedisController::class, 'create'])->name('dokter.rekam_medis.create');
+        Route::post('/store', [RekamMedisController::class, 'store'])->name('dokter.rekam_medis.store');
+        Route::get('/{id}', [RekamMedisController::class, 'show'])->name('dokter.rekam_medis.detail');
+    });
 });
 
 //Perawat
@@ -153,10 +164,28 @@ Route::middleware('isPerawat')->group(function () {
 //Resepsionis
 Route::middleware('isResepsionis')->prefix('resepsionis')->name('resepsionis.')->group(function () {
     Route::get('/dashboard', [DashboardResepsionisController::class, 'index'])->name('dashboard');
-    Route::get('/registrasipemilik', [PemilikController::class, 'create'])->name('registrasi_pemilik');
-    Route::post('/registrasipemilik', [PemilikController::class, 'store'])->name('registrasi_pemilik');  
-    Route::get('/registrasipet', [PetController::class, 'create'])->name('registrasi_pet');
-    Route::post('/registrasipet', [PetController::class, 'store'])->name('registrasi_pet');
+
+    Route::get('/pemilik/index',[ResepsionisPemilikController::class, 'index'])->name('pemilik.index');
+    Route::get('/registrasipemilik', [ResepsionisPemilikController::class, 'create'])->name('pemilik.create');
+    Route::post('/registrasipemilik', [ResepsionisPemilikController::class, 'store'])->name('pemilik.store'); 
+    Route::get('/pemilik/edit/{id}', [ResepsionisPemilikController::class, 'edit'])->name('pemilik.edit');
+    Route::put('/pemilik/update/{id}', [ResepsionisPemilikController::class, 'update'])->name('pemilik.update');
+    Route::delete('/pemilik/destroy/{id}', [ResepsionisPemilikController::class, 'destroy'])->name('pemilik.destroy');
+
+
+    Route::get('/pet/index',[ResepsionisPetController::class, 'index'])->name('pet.index'); 
+    Route::get('/registrasipet', [ResepsionisPetController::class, 'create'])->name('pet.create');
+    Route::post('/registrasipet', [ResepsionisPetController::class, 'store'])->name('pet.store');
+    Route::get('/edit/{id}', [ResepsionisPetController::class, 'edit'])->name('pet.edit');
+    Route::put('/update/{id}', [ResepsionisPetController::class, 'update'])->name('pet.update');
+    Route::delete('/destroy/{id}', [ResepsionisPetController::class, 'destroy'])->name('pet.destroy');
+
+    Route::get('/temu-dokter', [TemuDokterController::class, 'index'])->name('temu-dokter.index');
+    Route::get('/temu-dokter/create', [TemuDokterController::class, 'create'])->name('temu-dokter.create');
+    Route::post('/temu-dokter/store', [TemuDokterController::class, 'store'])->name('temu-dokter.store');
+    Route::get('/temu-dokter/edit/{id}', [TemuDokterController::class, 'edit'])->name('temu-dokter.edit');
+    Route::put('/temu-dokter/update/{id}', [TemuDokterController::class, 'update'])->name('temu-dokter.update');    
+    Route::delete('/temu-dokter/destroy/{id}', [TemuDokterController::class, 'destroy'])->name('temu-dokter.destroy');
 });
 
 //Pemilik

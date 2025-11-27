@@ -1,160 +1,116 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Home - Dokter</title>
-    <style>
-/* ===== Basic Layout ===== */
-body {
-    font-family: 'Poppins', Arial, sans-serif;
-    margin: 0;
-    background-color: #f4f5fb;
-}
 
-/* ===== Navbar ===== */
-nav {
-    background: linear-gradient(90deg, #4f52d6, #6b6ee2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 25px;
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
 
-nav .logo {
-    font-size: 20px;
-    font-weight: 600;
-}
+<?php $__env->startSection('content'); ?>
 
-.nav-links {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-links li {
-    position: relative;
-}
-
-.nav-links a,
-.nav-links button {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 16px;
-    display: inline-block;
-    transition: 0.3s;
-    font-weight: 500;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.nav-links a:hover,
-.nav-links button:hover {
-    background: rgba(255,255,255,0.15);
-    border-radius: 6px;
-}
-
-/* ===== Dropdown ===== */
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 42px;
-    left: 0;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    min-width: 220px;
-    z-index: 10;
-}
-
-.dropdown-menu li {
-    list-style: none;
-}
-
-.dropdown-menu a {
-    color: #333;
-    padding: 10px 15px;
-    display: block;
-    transition: background 0.25s ease;
-    border-radius: 5px;
-}
-
-.dropdown-menu a:hover {
-    background: #5559d2;
-    color: white;
-}
-
-/* ===== Content ===== */
-.content {
-    text-align: center;
-    margin-top: 60px;
-}
-
-.content h2 {
-    color: #222;
-    margin-bottom: 10px;
-}
-
-.content p {
-    color: #666;
-    font-size: 16px;
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-    nav {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .dropdown-menu {
-        position: static;
-        box-shadow: none;
-        background: transparent;
-    }
-
-    .dropdown-menu a {
-        color: white;
-        background: none;
-    }
-
-    .dropdown-menu a:hover {
-        background: rgba(255,255,255,0.15);
-    }
-}
-
-    </style>
-</head>
-<body>
-    <nav>
-        <div class="logo"> RSHP UNAIR</div>
-
-        <ul class="nav-links">
-            
-            <form action="<?php echo e(route('logout')); ?>" method="POST" style="display:inline;">
-                <?php echo csrf_field(); ?>
-                <button type="submit">Logout</button>
-            </form>
-        </ul>
-    </nav>
-
-    <div class="content">
-        <h2>Halo, <?php echo e(session('user_name')); ?>!</h2>
-        <p>Selamat datang di halaman Pemilik</p>
+<!--begin::App Content Header-->
+<div class="app-content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="mb-0">Dashboard Pemilik</h3>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard Pemilik</li>
+                </ol>
+            </div>
+        </div>
     </div>
-</body>
-</html>
-<?php /**PATH C:\laragon\www\laravel\laravelrshp\resources\views/pemilik/dashboard-pemilik.blade.php ENDPATH**/ ?>
+</div>
+<!--end::App Content Header-->
+
+<!--begin::App Content-->
+<div class="app-content">
+    <div class="container-fluid">
+
+        <!-- ====== GREETING ====== -->
+        <div class="alert alert-primary shadow-sm mb-4">
+            <h5 class="fw-bold mb-1">Halo, <?php echo e(Auth::user()->nama ?? 'Pemilik'); ?> 👋</h5>
+            <span>Selamat datang di dashboard Anda. Kelola hewan peliharaan Anda di sini.</span>
+        </div>
+
+        <!-- ====== INFO BOXES ====== -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon text-bg-primary"><i class="bi bi-heart"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Pet Anda</span>
+                        <span class="info-box-number"><?php echo e($totalPet ?? 0); ?></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon text-bg-success"><i class="bi bi-calendar-check"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Temu Dokter</span>
+                        <span class="info-box-number"><?php echo e($totalTemuDokter ?? 0); ?></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon text-bg-warning"><i class="bi bi-plus-circle"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Tambah Pet Baru</span>
+                        <a href="#" class="btn btn-sm btn-primary mt-2">Daftar Pet</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== TABLE PET ====== -->
+        <div class="card shadow-sm mt-4 mb-5">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title"><i class="bi bi-heart-pulse"></i> Daftar Pet Anda</h3>
+                <a href="#" class="btn btn-primary btn-sm">Tambah Pet</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover m-0">
+                        <thead>
+                            <tr>
+                                <th>Nama Pet</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Warna Tanda</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Ras</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $__empty_1 = true; $__currentLoopData = $pets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pet): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                            <tr>
+                                <td><?php echo e($pet->nama_pet); ?></td>
+                                <td><?php echo e($pet->tanggal_lahir); ?></td>
+                                <td><?php echo e($pet->warna_tanda); ?></td>
+                                <td><?php echo e($pet->jenis_kelamin); ?></td>
+                                <td><?php echo e($pet->nama_ras); ?></td>
+                                <td>
+                                    <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                    <button class="btn btn-danger btn-sm" onclick="if(confirm('Yakin hapus?')) document.getElementById('delpet-<?php echo e($pet->idpet); ?>').submit()"><i class="fas fa-trash"></i></button>
+                                    <form id="delpet-<?php echo e($pet->idpet); ?>" method="POST" hidden action="#"><?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?></form>
+                                </td>
+                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">Belum ada pet terdaftar.</td>
+                            </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--end::App Content-->
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.lte.main', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\laravel\laravelrshp\resources\views/pemilik/dashboard-pemilik.blade.php ENDPATH**/ ?>

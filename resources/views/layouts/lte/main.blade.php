@@ -7,10 +7,46 @@
     <body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
         <div class="app-wrapper">
             <!--begin::Navbar-->
-            @include('layouts.lte.navbar')
+            @php
+                $roleId = session('user_role');
+            @endphp
+            
+            @switch($roleId)
+                @case(1)
+                    @include('layouts.lte.navbar-admin')
+                    @break
+                @case(2)
+                    @include('layouts.lte.navbar-dokter')
+                    @break
+                @case(3)
+                    @include('layouts.lte.navbar-perawat')
+                    @break
+                @case(4)
+                    @include('layouts.lte.navbar-resepsionis')
+                    @break
+                @default
+                    @include('layouts.lte.navbar-pemilik')
+            @endswitch
             <!--end::Navbar-->
             <!--begin::Sidebar-->
-            @include('layouts.lte.sidebar')
+
+            @switch($roleId)
+                @case(1)
+                    @include('layouts.lte.sidebar-admin')
+                    @break
+                @case(2)
+                    @include('layouts.lte.sidebar-dokter')
+                    @break
+                @case(3)
+                    @include('layouts.lte.sidebar-perawat')
+                    @break
+                @case(4)
+                    @include('layouts.lte.sidebar-resepsionis')
+                    @break
+                @default
+                    @include('layouts.lte.sidebar-pemilik')
+            @endswitch
+
             <!--end::Sidebar-->
             <!--begin::App Main-->
             <main class="app-main">

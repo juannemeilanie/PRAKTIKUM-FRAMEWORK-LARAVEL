@@ -1,171 +1,206 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard Resepsionis</title>
-    <style>
-/* ===== Basic Layout ===== */
-body {
-    font-family: 'Poppins', Arial, sans-serif;
-    margin: 0;
-    background-color: #f4f5fb;
-}
 
-/* ===== Navbar ===== */
-nav {
-    background: linear-gradient(90deg, #4f52d6, #6b6ee2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 25px;
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
 
-nav .logo {
-    font-size: 20px;
-    font-weight: 600;
-}
+<?php $__env->startSection('content'); ?>
 
-.nav-links {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-links li {
-    position: relative;
-}
-
-.nav-links a,
-.nav-links button {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 16px;
-    display: inline-block;
-    transition: 0.3s;
-    font-weight: 500;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.nav-links a:hover,
-.nav-links button:hover {
-    background: rgba(255,255,255,0.15);
-    border-radius: 6px;
-}
-
-/* ===== Dropdown ===== */
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 42px;
-    left: 0;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    min-width: 220px;
-    z-index: 10;
-}
-
-.dropdown-menu li {
-    list-style: none;
-}
-
-.dropdown-menu a {
-    color: #333;
-    padding: 10px 15px;
-    display: block;
-    transition: background 0.25s ease;
-    border-radius: 5px;
-}
-
-.dropdown-menu a:hover {
-    background: #5559d2;
-    color: white;
-}
-
-/* ===== Content ===== */
-.content {
-    text-align: center;
-    margin-top: 60px;
-}
-
-.content h2 {
-    color: #222;
-    margin-bottom: 10px;
-}
-
-.content p {
-    color: #666;
-    font-size: 16px;
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-    nav {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .dropdown-menu {
-        position: static;
-        box-shadow: none;
-        background: transparent;
-    }
-
-    .dropdown-menu a {
-        color: white;
-        background: none;
-    }
-
-    .dropdown-menu a:hover {
-        background: rgba(255,255,255,0.15);
-    }
-}
-
-    </style>
-</head>
-<body>
-    <nav>
-        <div class="logo"> RSHP UNAIR</div>
-
-        <ul class="nav-links">
-            <li class="dropdown">
-                <a href="#">Registrasi ▾</a>
-                <ul class="dropdown-menu">
-                    <li><a href="<?php echo e(route('resepsionis.registrasi_pemilik')); ?>">Registrasi Pemilik</a></li>
-                    <li><a href="<?php echo e(route('resepsionis.registrasi_pet')); ?>">Registrasi Pet</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="<?php echo e(url('temu_dokter')); ?>">Temu Dokter</a>
-            </li>
-            <li>
-                <form action="<?php echo e(route('logout')); ?>" method="POST" style="display:inline;">
-                    <?php echo csrf_field(); ?>
-                    <button type="submit">Logout</button>
-                </form>
-            </li>
-        </ul>
-    </nav>
-
-    <div class="content">
-        <h2>Halo, <?php echo e(Auth::user()->nama ?? 'Pengguna'); ?> 👋</h2>
-        <p>Selamat datang di halaman Resepsinonis</p>
+<!--begin::App Content Header-->
+<div class="app-content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="mb-0">Dashboard Resepsionis</h3>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard Resepsionis</li>
+                </ol>
+            </div>
+        </div>
     </div>
-</body>
-</html>
-<?php /**PATH C:\laragon\www\laravel\laravelrshp\resources\views/resepsionis/dashboard-resepsionis.blade.php ENDPATH**/ ?>
+</div>
+<!--end::App Content Header-->
+
+<!--begin::App Content-->
+<div class="app-content">
+    <div class="container-fluid">
+
+        <!-- ====== GREETING CARD ====== -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="alert alert-primary shadow-sm">
+                    <h5 class="fw-bold mb-1">Halo, <?php echo e(Auth::user()->nama ?? 'Pengguna'); ?> 👋</h5>
+                    <span>Selamat datang di Dashboard Resepsionis RSHP Unair.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== INFO BOXES ====== -->
+        <div class="row">
+
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon text-bg-primary"><i class="bi bi-people-fill"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Pemilik</span>
+                        <span class="info-box-number"><?php echo e($totalPemilik ?? 0); ?></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon text-bg-success"><i class="bi bi-heart-pulse-fill"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Hewan</span>
+                        <span class="info-box-number"><?php echo e($totalPet ?? 0); ?></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon text-bg-warning"><i class="bi bi-calendar-check"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Temu Dokter Hari Ini</span>
+                        <span class="info-box-number"><?php echo e($totalTemuDokter ?? 0); ?></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ====== TABLE PEMILIK ====== -->
+        <div class="card shadow-sm mt-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title"><i class="bi bi-people"></i> Daftar Pemilik Terbaru</h3>
+                <a href="<?php echo e(route('resepsionis.pemilik.index')); ?>" class="btn btn-primary btn-sm">Lihat Semua</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover m-0">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Pemilik</th>
+                                <th>Email</th>
+                                <th>No WA</th>
+                                <th>Alamat</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $__currentLoopData = $pemilik; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td><?php echo e($index + 1); ?></td>
+                                <td><?php echo e($item->nama); ?></td>
+                                <td><?php echo e($item->email); ?></td>
+                                <td><?php echo e($item->no_wa); ?></td>
+                                <td><?php echo e($item->alamat); ?></td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm">Edit<i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-danger btn-sm" onclick="if(confirm('Hapus?')) document.getElementById('delete-<?php echo e($item->idpemilik); ?>').submit()">Hapus<i class="fas fa-trash"></i></button>
+                                    <form id="delete-<?php echo e($item->idpemilik); ?>" method="POST" action="<?php echo e(route('resepsionis.pemilik.destroy', $item->idpemilik)); ?>" hidden><?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?></form>
+                                </td>
+                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== TABLE PET ====== -->
+        <div class="card shadow-sm mt-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title"><i class="bi bi-heart"></i> Daftar Pet Terbaru</h3>
+                <a href="<?php echo e(route('resepsionis.pet.index')); ?>" class="btn btn-primary btn-sm">Lihat Semua</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover m-0">
+                        <thead>
+                            <tr>
+                                <th>Nama Pet</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Warna Tanda</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Pemilik</th>
+                                <th>Ras Hewan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $__currentLoopData = $pets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pet): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td><?php echo e($pet->nama_pet); ?></td>
+                                <td><?php echo e($pet->tanggal_lahir); ?></td>
+                                <td><?php echo e($pet->warna_tanda); ?></td>
+                                <td><?php echo e($pet->jenis_kelamin); ?></td>
+                                <td><?php echo e($pet->nama_pemilik); ?></td>
+                                <td><?php echo e($pet->nama_ras); ?></td>
+                                <td>
+                                    <a href="<?php echo e(route('resepsionis.pet.edit', $pet->idpet)); ?>" class="btn btn-warning btn-sm">Edit<i class="fas fa-edit"></i></a>
+                                    <button class="btn btn-danger btn-sm" onclick="if(confirm('Hapus?')) document.getElementById('delpet-<?php echo e($pet->idpet); ?>').submit()">Hapus<i class="fas fa-trash"></i></button>
+                                    <form id="delpet-<?php echo e($pet->idpet); ?>" method="POST" hidden action="<?php echo e(route('resepsionis.pet.destroy', $pet->idpet)); ?>"><?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?></form>
+                                </td>
+                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== TEMU DOKTER ====== -->
+        <div class="card shadow-sm mt-4 mb-5">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title"><i class="bi bi-calendar-check"></i> Jadwal Temu Dokter Hari Ini</h3>
+                <a href="<?php echo e(route('resepsionis.temu-dokter.index')); ?>" class="btn btn-primary btn-sm">Lihat Semua</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover m-0">
+                        <thead>
+                            <tr>
+                                <th>No Urut</th>
+                                <th>Waktu Daftar</th>
+                                <th>Nama Pet</th>
+                                <th>Nama Dokter</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $__currentLoopData = $temuDokter; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td><?php echo e($index + 1); ?></td>
+                                <td><?php echo e($item->waktu_daftar); ?></td>
+                                <td><?php echo e($item->nama_pet); ?></td>
+                                <td><?php echo e($item->nama_dokter); ?></td>
+                                <td>
+                                    <?php if($item->status == 1): ?>
+                                        <span class="badge text-bg-warning">Diproses</span>
+                                    <?php else: ?>
+                                        <span class="badge text-bg-success">Selesai</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm">Edit<i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-danger btn-sm" onclick="if(confirm('Hapus?')) document.getElementById('deltd-<?php echo e($item->idreservasi_dokter); ?>').submit()">Hapus<i class="fas fa-trash"></i></button>
+                                    <form id="deltd-<?php echo e($item->idreservasi_dokter); ?>" method="POST" action="<?php echo e(route('resepsionis.temu-dokter.destroy', $item->idreservasi_dokter)); ?>" hidden><?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?></form>
+                                </td>
+                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--end::App Content-->
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.lte.main', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\laravel\laravelrshp\resources\views/resepsionis/dashboard-resepsionis.blade.php ENDPATH**/ ?>
