@@ -26,15 +26,15 @@
 
         <!-- ====== GREETING ====== -->
         <div class="alert alert-primary shadow-sm mb-4">
-            <h5 class="fw-bold mb-1">Halo, <?php echo e(Auth::user()->nama ?? 'Pemilik'); ?> 👋</h5>
-            <span>Selamat datang di dashboard Anda. Kelola hewan peliharaan Anda di sini.</span>
+            <h5 class="fw-bold mb-1">Halo, <?php echo e(Auth::user()->nama ?? 'Pemilik'); ?></h5>
+            <span>Selamat datang di dashboard Anda</span>
         </div>
 
         <!-- ====== INFO BOXES ====== -->
         <div class="row">
             <div class="col-md-4">
                 <div class="info-box shadow-sm">
-                    <span class="info-box-icon text-bg-primary"><i class="bi bi-heart"></i></span>
+                    <span class="info-box-icon text-bg-primary"><i class="bi bi-hearts"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Total Pet Anda</span>
                         <span class="info-box-number"><?php echo e($totalPet ?? 0); ?></span>
@@ -47,7 +47,17 @@
                     <span class="info-box-icon text-bg-success"><i class="bi bi-calendar-check"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Temu Dokter</span>
-                        <span class="info-box-number"><?php echo e($totalTemuDokter ?? 0); ?></span>
+                        <span class="info-box-number"><?php echo e($totaltemuDokter); ?></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon text-bg-danger"><i class="bi bi-clipboard2-pulse-fill"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Riwayat Rekam Medis</span>
+                        <span class="info-box-number"><?php echo e($totalRekam); ?></span>
                     </div>
                 </div>
             </div>
@@ -66,8 +76,7 @@
         <!-- ====== TABLE PET ====== -->
         <div class="card shadow-sm mt-4 mb-5">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="card-title"><i class="bi bi-heart-pulse"></i> Daftar Pet Anda</h3>
-                <a href="#" class="btn btn-primary btn-sm">Tambah Pet</a>
+                <h3 class="card-title"><i class="bi bi-hearts"></i> Daftar Pet Anda</h3>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -79,7 +88,6 @@
                                 <th>Warna Tanda</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Ras</th>
-                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,11 +98,6 @@
                                 <td><?php echo e($pet->warna_tanda); ?></td>
                                 <td><?php echo e($pet->jenis_kelamin); ?></td>
                                 <td><?php echo e($pet->nama_ras); ?></td>
-                                <td>
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                    <button class="btn btn-danger btn-sm" onclick="if(confirm('Yakin hapus?')) document.getElementById('delpet-<?php echo e($pet->idpet); ?>').submit()"><i class="fas fa-trash"></i></button>
-                                    <form id="delpet-<?php echo e($pet->idpet); ?>" method="POST" hidden action="#"><?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?></form>
-                                </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
@@ -103,10 +106,82 @@
                             <?php endif; ?>
                         </tbody>
                     </table>
+                    <div class="card-footer clearfix">
+                        <a href="<?php echo e(route('pemilik.data-pet.index')); ?>" class="btn btn-primary btn-sm float-end">Lihat Semua</a>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <div class="card shadow-sm mt-4 mb-5">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title"><i class="bi bi-calendar-check-fill"></i> Jadwal Temu Dokter</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table  class="table table-hover m-0">
+                        <thead>
+                            <tr>
+                                <th>No Urut</th>
+                                <th>Waktu Daftar</th>
+                                <th>Nama Pet</th>
+                                <th>Nama Dokter</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $__currentLoopData = $temuDokter; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td><?php echo e($index + 1); ?></td>
+                                <td><?php echo e($item->waktu_daftar); ?></td>
+                                <td><?php echo e($item->nama_pet); ?></td>
+                                <td><?php echo e($item->nama_dokter); ?></td>
+                                <td><?php echo e($item->status == 1 ? 'Diproses' : 'Selesai'); ?></td>
+                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </tbody>
+                    </table>
+                    <div class="card-footer clearfix">
+                        <a href="<?php echo e(route('pemilik.temu-dokter.index')); ?>" class="btn btn-primary btn-sm float-end">Lihat Semua</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mt-4 mb-5">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title"><i class="bi bi-clipboard2-pulse-fill"></i> Riwayat Rekam Medis</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table  class="table table-hover m-0">
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Pet</th>
+                        <th>Pemilik</th>
+                        <th>Diagnosa</th>
+                        <th>Dokter</th>
+                        <th>Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $__currentLoopData = $dataRekam; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <tr>
+                        <td><?php echo e($i + 1); ?></td>
+                        <td><?php echo e($r->nama_pet); ?></td>
+                        <td><?php echo e($r->nama_pemilik); ?></td>
+                        <td><?php echo e($r->diagnosa); ?></td>
+                        <td><?php echo e($r->nama_dokter); ?></td>
+                        <td><?php echo e($r->created_at); ?></td>
+                    </tr>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </tbody>
+            </table>
+            <div class="card-footer clearfix">
+                <a href="<?php echo e(route('pemilik.rekam-medis.index')); ?>" class="btn btn-primary btn-sm float-end">Lihat Semua</a>
+            </div>
+        </div>
     </div>
 </div>
 <!--end::App Content-->

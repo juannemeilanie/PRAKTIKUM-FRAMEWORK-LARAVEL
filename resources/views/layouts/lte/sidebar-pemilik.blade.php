@@ -30,19 +30,38 @@
                 data-accordion="false"
                 id="navigation"
             >
+            
                 <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
+                    <a href="{{ route('pemilik.dashboard') }}" class="nav-link active">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
 
+                <li class="nav-header">HEWAN</li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-calendar-check-fill"></i>
-                        <p>Daftar Pet</p>
+                    <a href="{{ route('pemilik.data-pet.index') }}" class="nav-link">
+                        <i class="nav-icon bi bi-hearts"></i>
+                        <p>Hewan Peliharaan</p>
                     </a>
                 </li>
+
+                <li class="nav-header">LAYANAN</li>
+                <li class="nav-item">
+                    <a href="{{ route('pemilik.temu-dokter.index') }}" class="nav-link">
+                        <i class="nav-icon bi bi-calendar-check-fill"></i>
+                        <p>Jadwal Temu</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('pemilik.rekam-medis.index') }}" class="nav-link">
+                        <i class="nav-icon bi bi-clipboard2-pulse-fill"></i>
+                        <p>Riwayat Medis</p>
+                    </a>
+                </li>
+
+                <li class="nav-header">SYSTEM</li>
 
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST" style="display:inline;">

@@ -39,8 +39,8 @@
                 <td><?php echo e($pet->tanggal_lahir); ?></td>
                 <td><?php echo e($pet->warna_tanda); ?></td>
                 <td><?php echo e($pet->jenis_kelamin); ?></td>
-                <td><?php echo e($pet->pemilik->user->nama); ?></td>
-                <td><?php echo e($pet->rasHewan->nama_ras); ?></td>
+                <td><?php echo e($pet->nama_pemilik); ?></td>
+                <td><?php echo e($pet->nama_ras); ?></td>
                 <td>
                     <button type="button" class="btn btn-sm btn-warning" onclick="window.location='<?php echo e(route('admin.pet.edit', $pet->idpet)); ?>'">
                         <i class="fas fa-edit"></i> Edit

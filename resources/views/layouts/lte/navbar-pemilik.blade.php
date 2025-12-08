@@ -1,8 +1,15 @@
+@php
+
+    $pemilik = DB::table('pemilik')
+        ->where('iduser', Auth::user()->iduser)
+        ->first();
+@endphp
+
 <!--begin::Header-->
 <nav class="app-header navbar navbar-expand bg-body">
-  <!--begin::Container-->
   <div class="container-fluid">
-    <!--begin::Start Navbar Links-->
+    
+    <!-- Left Side -->
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
@@ -12,61 +19,48 @@
       <li class="nav-item d-none d-md-block">
         <a href="#" class="nav-link">Home</a>
       </li>
-      <li class="nav-item d-none d-md-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
     </ul>
-    <!--end::Start Navbar Links-->
 
-    <!--begin::End Navbar Links-->
+    <!-- Right Side -->
     <ul class="navbar-nav ms-auto">
-      <!--begin::Navbar Search-->
-      <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="bi bi-search"></i>
-        </a>
-      </li>
-      <!--end::Navbar Search-->
 
-      <!--begin::Fullscreen Toggle-->
+      <!-- Fullscreen -->
       <li class="nav-item">
         <a class="nav-link" href="#" data-lte-toggle="fullscreen">
           <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
-          <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i>
+          <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display:none;"></i>
         </a>
       </li>
-      <!--end::Fullscreen Toggle-->
 
-      <!--begin::User Menu Dropdown-->
+      <!-- User Dropdown -->
       <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-          <img
-            src={deploymentPath + "assets/img/user2-160x160.jpg"}
-            class="user-image rounded-circle shadow"
-            alt="User Image"
-          />
-          <span class="d-none d-md-inline">{{ Auth::user()->nama ?? 'Pengguna' }}</span>
+          <span class="d-none d-md-inline">{{ Auth::user()->nama }}</span>
         </a>
+
         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-          <!--begin::User Image-->
-          <li class="user-header text-bg-primary">
-            <img
-              src={deploymentPath + "assets/img/user2-160x160.jpg"}
-              class="rounded-circle shadow"
-              alt="User Image"
-            />
-            <p>
-              {{ Auth::user()->nama ?? 'Pengguna' }} - Pemilik
-              <small>Member since Februari. 2025</small>
+
+          <!-- Profile Header -->
+          <li class="user-body text-center py-2 px-3">
+            <p class="mb-1 fw-bold">
+              {{ Auth::user()->nama }} 
+              - {{ $pemilik ? 'Pemilik' : 'User' }}
             </p>
+            <small class="text-muted">Member since Oktober 2025</small>
           </li>
-          <!--end::User Image-->
+
+          <!-- Info Tambahan -->
+          <li class="user-body text-muted py-2 px-3">
+              <div><strong>Email:</strong> {{ Auth::user()->email }}</div>
+              <div><strong>Alamat:</strong> {{ $pemilik->alamat ?? '-' }}</div>
+              <div><strong>No HP:</strong> {{ $pemilik->no_wa ?? '-' }}</div>
+          </li>
+
         </ul>
       </li>
-      <!--end::User Menu Dropdown-->
+
     </ul>
-    <!--end::End Navbar Links-->
+
   </div>
-  <!--end::Container-->
 </nav>
 <!--end::Header-->

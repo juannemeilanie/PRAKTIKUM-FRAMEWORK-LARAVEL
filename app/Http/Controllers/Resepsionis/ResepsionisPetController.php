@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers\Resepsionis;
 
-use App\Models\Pet;
-use App\Models\Pemilik;
-use App\Models\RasHewan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -26,21 +23,38 @@ class ResepsionisPetController extends Controller
                 'ras_hewan.nama_ras'
             )
             ->get();
+
         return view('resepsionis.pet.index', compact('pets'));
     }
 
     public function create(){
+        
         return view('resepsionis.pet.registrasi_pet', [
-            'pemilik' => Pemilik::all(),
-            'rashewan' => RasHewan::all(),
-            'pets' => Pet::with(['pemilik','rasHewan'])->get(),
+            'pemilik' => DB::table('pemilik')
+                        ->join('user', 'pemilik.iduser', '=', 'user.iduser')
+                                    ->select('pemilik.idpemilik', 'user.nama as nama_pemilik')
+                                    ->get(),
+
+            'rashewan' => DB::table('ras_hewan')->get(),
+
+    
+            'pets' => DB::table('pet')
+                        ->join('pemilik', 'pet.idpemilik', '=', 'pemilik.idpemilik')
+                        ->join('user', 'pemilik.iduser', '=', 'user.iduser')
+                        ->join('ras_hewan', 'pet.idras_hewan', '=', 'ras_hewan.idras_hewan')
+                        ->select(
+                            'pet.*',
+                            'user.nama as nama_pemilik',
+                            'ras_hewan.nama_ras'
+                        )
+                        ->get(),
         ]);
     }
 
     public function store(Request $request){
         $validatedData = $this->validatePet($request);
 
-        $pet = $this->createPet($validatedData);
+        $this->createPet($validatedData);
 
         return redirect()->route('resepsionis.pet.index')
                         ->with('success', 'Pet berhasil ditambahkan.');
@@ -82,7 +96,7 @@ class ResepsionisPetController extends Controller
 
     protected function createPet(array $data){
         try{
-            return Pet::create([
+            return DB::table('pet')->insert([
                 'nama' => $this->formatNamaPet($data['nama']),
                 'tanggal_lahir' => $data['tanggal_lahir'],
                 'warna_tanda' => $data['warna_tanda'],
@@ -96,21 +110,40 @@ class ResepsionisPetController extends Controller
     }
 
     public function edit($id){
-        $pet = Pet::findOrFail($id);
+        $pet = DB::table('pet')->where('idpet', $id)->first();
 
-        return view('resepsionis.pet.edit', [
-            'pet' => $pet,
-            'pemilik' => Pemilik::all(),
-            'rashewan' => RasHewan::all(),
-        ]);
+        if (!$pet) {
+         return redirect()->route('resepsionis.pet.index')->with('error', 'Pet tidak ditemukan.');
+        }
+
+        // Dropdown Pemilik (join agar dapat nama pemilik)
+        $pemilik = DB::table('pemilik')
+                ->join('user', 'pemilik.iduser', '=', 'user.iduser')
+                ->select('pemilik.idpemilik', 'user.nama as nama_pemilik')
+                ->get();
+
+        // Dropdown Ras Hewan
+        $rashewan = DB::table('ras_hewan')->get();
+
+        return view('resepsionis.pet.edit', compact('pet', 'pemilik', 'rashewan'));
     }
 
     public function update(Request $request, $id){
-        $pet = Pet::findOrFail($id);
+        $validatedData = $request->validate([
+            'nama' => [
+                'required',
+                'string',
+                'unique:pet,nama,' . $id . ',idpet'
+            ],
+            'tanggal_lahir' => 'required|date',
+            'warna_tanda' => 'required|string',
+            'jenis_kelamin' => 'required|string',
+            'idpemilik' => 'required|exists:pemilik,idpemilik',
+            'idras_hewan' => 'required|exists:ras_hewan,idras_hewan',
+        ]);
 
-        $validatedData = $this->validatePet($request, $id);
-
-        $pet->update([
+        // Update data pet
+        DB::table('pet')->where('idpet', $id)->update([
             'nama' => $this->formatNamaPet($validatedData['nama']),
             'tanggal_lahir' => $validatedData['tanggal_lahir'],
             'warna_tanda' => $validatedData['warna_tanda'],
@@ -124,8 +157,7 @@ class ResepsionisPetController extends Controller
     }
 
     public function destroy($id){
-        $pet = Pet::findOrFail($id);
-        $pet->delete();
+        DB::table('pet')->where('idpet', $id)->delete();
 
         return redirect()->route('resepsionis.pet.index')
                         ->with('success', 'Pet berhasil dihapus.');

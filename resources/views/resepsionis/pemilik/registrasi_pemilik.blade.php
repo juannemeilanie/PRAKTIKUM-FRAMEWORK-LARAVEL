@@ -23,7 +23,7 @@
                     @endif
 
                     {{-- Form Registrasi --}}
-                    <form method="POST" action="{{ route('admin.pemilik.store') }}">
+                    <form method="POST" action="{{ route('resepsionis.pemilik.store') }}">
                         @csrf
 
                         {{-- Nama --}}
@@ -41,6 +41,7 @@
                             @enderror
                         </div>
 
+                        
                         {{-- Email --}}
                         <div class="mb-3">
                             <label for="email" class="form-label">Email <span class="text-danger">*</span></label>

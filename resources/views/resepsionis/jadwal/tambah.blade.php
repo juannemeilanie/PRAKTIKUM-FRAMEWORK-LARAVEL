@@ -39,6 +39,12 @@
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label for="waktu_daftar">Tanggal Daftar</label>
+                            <input type="datetime-local" name="waktu_daftar" class="form-control" required>
+                        </div>
+                        <br>
+
                         <div class="mb-3">
                             <label for="idrole_user" class="form-label">Nama Dokter <span class="text-danger">*</span></label>
                             <select name="idrole_user" id="idrole_user" 

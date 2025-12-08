@@ -13,14 +13,14 @@ class RoleUserController extends Controller
 {
     public function index(){
         $roleUser = DB::table('role_user')
-        ->join('user', 'role_user.iduser', '=', 'user.iduser')
-        ->join('role', 'role_user.idrole', '=', 'role.idrole')
-        ->select(
-            'role_user.*',
-            'user.nama',
-            'role.nama_role'
-        )
-        ->get();
+            ->join('user', 'role_user.iduser', '=', 'user.iduser')
+            ->join('role', 'role_user.idrole', '=', 'role.idrole')
+            ->select(
+                'role_user.*',
+                'user.nama',
+                'role.nama_role'
+            )
+            ->get();
         return view('admin.user-role.index', compact('roleUser'));
     }
 
@@ -75,9 +75,12 @@ class RoleUserController extends Controller
     }
 
     public function destroy($id){
-        RoleUser::destroy($id);
+        DB::table('temu_dokter')->where('idrole_user', $id)->delete();
+
+        DB::table('role_user')->where('idrole_user', $id)->delete();
 
         return redirect()->route('admin.user-role.index')
-                        ->with('success', 'Role user berhasil dihapus.');
+            ->with('success', 'Role user & data terkait berhasil dihapus.');
     }
+
 }

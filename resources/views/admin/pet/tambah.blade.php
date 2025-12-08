@@ -74,8 +74,8 @@
                                     class="form-select @error('jenis_kelamin') is-invalid @enderror" 
                                     required>
                                 <option value="">-- Pilih Jenis Kelamin --</option>
-                                <option value="M" {{ old('jenis_kelamin') == 'M' ? 'selected' : '' }}>Jantan</option>
-                                <option value="F" {{ old('jenis_kelamin') == 'F' ? 'selected' : '' }}>Betina</option>
+                                <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Jantan</option>
+                                <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Betina</option>
                             </select>
                             @error('jenis_kelamin')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -90,7 +90,7 @@
                                 @foreach ($pemilik as $p)
                                     <option value="{{ $p->idpemilik }}" 
                                             {{ old('idpemilik') == $p->idpemilik ? 'selected' : '' }}>
-                                        {{ $p->user->nama }}
+                                        {{ $p->nama_pemilik }}
                                     </option>
                                 @endforeach
                             </select>

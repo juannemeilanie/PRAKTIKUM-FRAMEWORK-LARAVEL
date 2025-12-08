@@ -37,11 +37,14 @@
                     <td>{{ $u->email }}</td>
                     <td>
                         <button type="button" class="btn btn-sm btn-warning" onclick="window.location='{{ route('admin.user.edit', $u->iduser) }}'">Edit</button>
-                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                        <form action="{{ route('admin.user.destroy', $u->iduser) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
+                        
+                        <form action="{{ route('admin.user.destroy', $u->iduser) }}"
+                            method="POST"
+                            class="d-inline"
+                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
                             @csrf
                             @method('DELETE')
-                        
+                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                         </form>
                     </td>
                 </tr>

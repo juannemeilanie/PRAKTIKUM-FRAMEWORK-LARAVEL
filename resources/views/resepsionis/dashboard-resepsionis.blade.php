@@ -28,8 +28,8 @@
         <div class="row mb-4">
             <div class="col-md-12">
                 <div class="alert alert-primary shadow-sm">
-                    <h5 class="fw-bold mb-1">Halo, {{ Auth::user()->nama ?? 'Pengguna' }} 👋</h5>
-                    <span>Selamat datang di Dashboard Resepsionis RSHP Unair.</span>
+                    <h5 class="fw-bold mb-1">Halo, {{ Auth::user()->nama ?? 'Pengguna' }} </h5>
+                    <span>Selamat datang di Dashboard Resepsionis </span>
                 </div>
             </div>
         </div>
@@ -73,7 +73,6 @@
         <div class="card shadow-sm mt-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title"><i class="bi bi-people"></i> Daftar Pemilik Terbaru</h3>
-                <a href="{{ route('resepsionis.pemilik.index') }}" class="btn btn-primary btn-sm">Lihat Semua</a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -105,6 +104,9 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="card-footer clearfix">
+                        <a href="{{ route('resepsionis.pemilik.index') }}" class="btn btn-primary btn-sm float-end">Lihat Semua</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,7 +115,6 @@
         <div class="card shadow-sm mt-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title"><i class="bi bi-heart"></i> Daftar Pet Terbaru</h3>
-                <a href="{{ route('resepsionis.pet.index') }}" class="btn btn-primary btn-sm">Lihat Semua</a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -147,6 +148,9 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="card-footer clearfix">
+                        <a href="{{ route('resepsionis.pet.index') }}" class="btn btn-primary btn-sm float-end">Lihat Semua</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -155,7 +159,6 @@
         <div class="card shadow-sm mt-4 mb-5">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title"><i class="bi bi-calendar-check"></i> Jadwal Temu Dokter Hari Ini</h3>
-                <a href="{{ route('resepsionis.temu-dokter.index') }}" class="btn btn-primary btn-sm">Lihat Semua</a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -193,6 +196,9 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="card-footer clearfix">
+                        <a href="{{ route('resepsionis.temu-dokter.index') }}" class="btn btn-primary btn-sm float-end">Lihat Semua</a>
+                    </div>
                 </div>
             </div>
         </div>

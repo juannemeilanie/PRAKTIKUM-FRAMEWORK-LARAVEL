@@ -6,32 +6,17 @@
 <head>
     <title>Temu Dokter</title>
     <style>
-        th { background:#8f93d8ff;}
-
-        .custom-table {
-            width: 100%;
-            border-collapse: collapse;
+        tr { text-align: center;}
+        td { border:1px solid #e0e0e0; padding:10px 12px; text-align: center; }
+        th { background:#8f93d8ff; padding: 12px;}
+        table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 8px; }
+        .card {
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-top: 10px;
         }
-
-        .custom-table th {
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 14px;
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        .custom-table td {
-            padding: 15px;
-            border-bottom: 1px solid #f0f0f0;
-            color: #555;
-            font-size: 14px;
-        }
-
-        .custom-table tbody tr:hover {
-            background: #f8f9fa;
-        }
-
     </style>
 </head>
 <body>
@@ -62,7 +47,7 @@
                 <td>{{ $item->nama_dokter }}</td>
                 <td>{{ $item->status == 1 ? 'Diproses' : 'Selesai' }}</td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                    <button type="button" class="btn btn-sm btn-warning" onclick="window.location='{{ route('resepsionis.temu-dokter.edit', $item->idreservasi_dokter) }}'">
                         <i class="fas fa-edit"></i> Edit
                     </button>
                     <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Apakah Anda yakin ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $item->idreservasi_dokter }}').submit(); }">

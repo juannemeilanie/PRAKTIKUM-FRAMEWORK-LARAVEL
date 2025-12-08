@@ -31,14 +31,14 @@
                 id="navigation"
             >
                 <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
+                    <a href="{{ route('perawat.dashboard') }}" class="nav-link active">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
 
                 <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
+                    <a href="{{ route('perawat.data-pasien.index') }}" class="nav-link active">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>Data Pasien</p>
                     </a>

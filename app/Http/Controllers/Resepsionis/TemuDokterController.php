@@ -47,7 +47,7 @@ class TemuDokterController extends Controller
 
         DB::table('temu_dokter')->insert([
             'no_urut'       => $noUrut,
-            'waktu_daftar'  => now(),
+            'waktu_daftar'  => $validated['waktu_daftar'],
             'status'        => 1,
             'idpet'         => $validated['idpet'],
             'idrole_user'   => $validated['idrole_user'],
@@ -62,9 +62,11 @@ class TemuDokterController extends Controller
         return $request->validate([
             'idpet' => ['required', 'integer'],
             'idrole_user' => ['required', 'integer'],
+            'waktu_daftar' => ['required', 'date'],
         ], [
             'idpet.required' => 'Pet wajib dipilih.',
             'idrole_user.required' => 'Dokter wajib dipilih.',
+            'waktu_daftar.required' => 'Waktu daftar wajib diisi.',
         ]);
     }
 
@@ -74,7 +76,13 @@ class TemuDokterController extends Controller
             ->where('idreservasi_dokter', $id)
             ->first();
 
-        return view('resepsionis.jadwal.edit', compact('temuDokter'));
+        $pet = DB::table('pet')->get();
+        $dokter = DB::table('role_user')
+            ->join('user', 'role_user.iduser', '=', 'user.iduser')
+            ->where('role_user.idrole', '2')
+            ->select('role_user.idrole_user', 'user.nama', 'user.iduser')
+            ->get();
+        return view('resepsionis.jadwal.edit', compact('temuDokter', 'pet', 'dokter'));
     }
 
     public function update(Request $request, $id)
@@ -84,10 +92,9 @@ class TemuDokterController extends Controller
         DB::table('temu_dokter')
             ->where('idreservasi_dokter', $id)
             ->update([
-                'no_urut'       => $validated['no_urut'],
-                'status'        => $validated['status'],
                 'idpet'         => $validated['idpet'],
                 'idrole_user'   => $validated['idrole_user'],
+                'waktu_daftar' => $validated['waktu_daftar'],
             ]);
 
         return redirect()->route('resepsionis.temu-dokter.index')

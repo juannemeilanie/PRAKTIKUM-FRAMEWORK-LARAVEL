@@ -39,8 +39,8 @@
                 <td>{{ $pet->tanggal_lahir }}</td>
                 <td>{{ $pet->warna_tanda }}</td>
                 <td>{{ $pet->jenis_kelamin }}</td>
-                <td>{{ $pet->pemilik->user->nama }}</td>
-                <td>{{ $pet->rasHewan->nama_ras }}</td>
+                <td>{{ $pet->nama_pemilik }}</td>
+                <td>{{ $pet->nama_ras }}</td>
                 <td>
                     <button type="button" class="btn btn-sm btn-warning" onclick="window.location='{{ route('admin.pet.edit', $pet->idpet) }}'">
                         <i class="fas fa-edit"></i> Edit

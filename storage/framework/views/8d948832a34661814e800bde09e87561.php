@@ -28,8 +28,8 @@
         <div class="row mb-4">
             <div class="col-md-12">
                 <div class="alert alert-primary shadow-sm">
-                    <h5 class="fw-bold mb-1">Halo, <?php echo e(session('user_name')); ?> 👋</h5>
-                    <span>Selamat datang di dashboard dokter RSHP Unair.</span>
+                    <h5 class="fw-bold mb-1">Halo, <?php echo e(session('user_name')); ?> </h5>
+                    <span>Selamat datang di dashboard Dokter</span>
                 </div>
             </div>
         </div>
@@ -42,8 +42,8 @@
                         <i class="bi bi-journal-medical"></i>
                     </span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Rekam Medis Hari Ini</span>
-                        <span class="info-box-number">12</span>
+                        <span class="info-box-text">Rekam Medis</span>
+                        <span class="info-box-number"><?php echo e($totalRekam); ?></span>
                     </div>
                 </div>
             </div>
@@ -55,42 +55,18 @@
                     </span>
                     <div class="info-box-content">
                         <span class="info-box-text">Pasien Ditangani</span>
-                        <span class="info-box-number">7</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                    <span class="info-box-icon text-bg-warning shadow-sm">
-                        <i class="bi bi-clock-history"></i>
-                    </span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Menunggu Pemeriksaan</span>
-                        <span class="info-box-number">5</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                    <span class="info-box-icon text-bg-danger shadow-sm">
-                        <i class="bi bi-bandaid-fill"></i>
-                    </span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Tindakan Hari Ini</span>
-                        <span class="info-box-number">3</span>
+                        <span class="info-box-number"><?php echo e($totalPasien); ?></span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ====== TABLE REKAM MEDIS ====== -->
+
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card shadow-sm">
                     <div class="card-header">
-                        <h3 class="card-title">Rekam Medis Terbaru</h3>
+                        <h3 class="card-title">Rekam Medis</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
                                 <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
@@ -101,49 +77,91 @@
 
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table m-0">
+                            <table class="table m-0">        
                                 <thead>
                                     <tr>
-                                        <th>No. RM</th>
-                                        <th>Nama Hewan</th>
+                                        <th>No</th>
+                                        <th>Pet</th>
                                         <th>Pemilik</th>
+                                        <th>Diagnosa</th>
+                                        <th>Dokter</th>
                                         <th>Tanggal</th>
-                                        <th>Status</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    <?php $__currentLoopData = $dataRekam; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td><a href="#">RM001</a></td>
-                                        <td>Bruno</td>
-                                        <td>John Doe</td>
-                                        <td>27 Nov 2025</td>
-                                        <td><span class="badge text-bg-success">Selesai</span></td>
+                                        <td><?php echo e($i + 1); ?></td>
+                                        <td><?php echo e($r->nama_pet); ?></td>
+                                        <td><?php echo e($r->nama_pemilik); ?></td>
+                                        <td><?php echo e($r->diagnosa); ?></td>
+                                        <td><?php echo e($r->nama_dokter); ?></td>
+                                        <td><?php echo e($r->created_at); ?></td>
+                                        <td>
+                                            <a href="<?php echo e(route('dokter.rekam_medis.show', $r->idrekam_medis)); ?>" class="btn btn-secondary">
+                                                Detail
+                                            </a>
+                                        </td>
                                     </tr>
-
-                                    <tr>
-                                        <td><a href="#">RM002</a></td>
-                                        <td>Luna</td>
-                                        <td>Sarah</td>
-                                        <td>27 Nov 2025</td>
-                                        <td><span class="badge text-bg-warning">Proses</span></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td><a href="#">RM003</a></td>
-                                        <td>Milo</td>
-                                        <td>Michael</td>
-                                        <td>26 Nov 2025</td>
-                                        <td><span class="badge text-bg-danger">Belum Ditangani</span></td>
-                                    </tr>
-
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
                     <div class="card-footer clearfix">
-                        <a href="#" class="btn btn-primary btn-sm float-end">Lihat Semua</a>
+                        <a href="<?php echo e(route('dokter.rekam_medis.index')); ?>" class="btn btn-primary btn-sm float-end">Lihat Semua</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h3 class="card-title">Data Pasien</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
+                                <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
+                                <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                                <table class="table m-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Pet</th>
+                                            <th>Tanggal Lahir</th>
+                                            <th>Warna Tanda</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>Pemilik</th>
+                                            <th>Ras Hewan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $__currentLoopData = $pets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $pet): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <tr>
+                                            <td><?php echo e($pet->nama); ?></td>
+                                            <td><?php echo e($pet->tanggal_lahir); ?></td>
+                                            <td><?php echo e($pet->warna_tanda); ?></td>
+                                            <td><?php echo e($pet->jenis_kelamin); ?></td>
+                                            <td><?php echo e($pet->nama_pemilik); ?></td>
+                                            <td><?php echo e($pet->nama_ras); ?></td>
+                                        </tr>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    <div class="card-footer clearfix">
+                        <a href="<?php echo e(route('dokter.data-pasien.index')); ?>" class="btn btn-primary btn-sm float-end">Lihat Semua</a>
                     </div>
                 </div>
             </div>

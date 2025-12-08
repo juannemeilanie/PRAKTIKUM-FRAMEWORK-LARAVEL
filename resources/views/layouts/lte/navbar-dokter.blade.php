@@ -1,3 +1,9 @@
+@php
+    $dokter = DB::table('dokter')
+        ->where('iduser', Auth::user()->iduser)
+        ->first();
+@endphp
+
 <!--begin::Header-->
 <nav class="app-header navbar navbar-expand bg-body">
   <!--begin::Container-->
@@ -39,30 +45,31 @@
 
       <!--begin::User Menu Dropdown-->
       <li class="nav-item dropdown user-menu">
-        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-          <img
-            src={deploymentPath + "assets/img/user2-160x160.jpg"}
-            class="user-image rounded-circle shadow"
-            alt="User Image"
-          />
-          <span class="d-none d-md-inline">{{ Auth::user()->nama ?? 'Pengguna' }}</span>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-          <!--begin::User Image-->
-          <li class="user-header text-bg-primary">
-            <img
-              src={deploymentPath + "assets/img/user2-160x160.jpg"}
-              class="rounded-circle shadow"
-              alt="User Image"
-            />
-            <p>
-              {{ Auth::user()->nama ?? 'Pengguna' }} - Dokter
-              <small>Member since Februari. 2025</small>
-            </p>
-          </li>
-          <!--end::User Image-->
-        </ul>
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+              <span class="d-none d-md-inline">{{ Auth::user()->nama }}</span>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+
+              <!-- Profile Header -->
+              <li class="user-body text-center  py-2 px-3">
+                  <p class="mb-1 fw-bold">
+                      {{ Auth::user()->nama }} - Dokter
+                  </p>
+
+                  <big>{{ $dokter->bidang_dokter ?? '-' }}</big><br>
+                  <small class="text-muted">Member since Februari 2025</small>
+              </li>
+              <!-- Info Tambahan -->
+              <li class="user-body text-muted py-2 px-3">
+                  <div><strong>Email:</strong> {{ Auth::user()->email }}</div>
+                  <div><strong>Alamat:</strong> {{ $dokter->alamat ?? '-' }}</div>
+                  <div><strong>No HP:</strong> {{ $dokter->no_hp ?? '-' }}</div>
+                  <div><strong>Jenis Kelamin:</strong> {{ $dokter->jenis_kelamin ?? '-' }}</div>
+              </li>
+          </ul>
       </li>
+
       <!--end::User Menu Dropdown-->
     </ul>
     <!--end::End Navbar Links-->

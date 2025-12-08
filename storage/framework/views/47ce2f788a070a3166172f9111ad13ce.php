@@ -39,7 +39,7 @@
                     <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Apakah Anda yakin ingin menghapus data ini?')) { document.getElementById('delete-form-<?php echo e($kategori->idkategori_klinis); ?>').submit(); }">
                         <i class="fas fa-trash"></i> Hapus
                     </button>
-                    <form id="delete-form-<?php echo e($kategori->idkategori_klinis); ?>" action="#" method="POST" style="display: none;">
+                    <form id="delete-form-<?php echo e($kategori->idkategori_klinis); ?>" action="<?php echo e(route('admin.kategori-klinis.destroy', $kategori->idkategori_klinis)); ?>" method="POST" style="display: none;">
                         <?php echo csrf_field(); ?>
                         <?php echo method_field('DELETE'); ?>
                     </form>

@@ -153,7 +153,7 @@ unset($__errorArgs, $__bag); ?>" required>
                                 <?php $__currentLoopData = $pemilik; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($p->idpemilik); ?>" 
                                             <?php echo e(old('idpemilik') == $p->idpemilik ? 'selected' : ''); ?>>
-                                        <?php echo e($p->user->nama); ?>
+                                        <?php echo e($p->nama_pemilik); ?>
 
                                     </option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
