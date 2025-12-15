@@ -37,6 +37,8 @@
                     </a>
                 </li>
 
+                <li class="nav-header">LAYANAN</li>
+
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon bi bi-people-fill"></i>
@@ -69,6 +71,8 @@
                     </a>
                 </li>
 
+                <li class="nav-header">SYSTEM</li>
+                
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST" style="display:inline;">
                         @csrf

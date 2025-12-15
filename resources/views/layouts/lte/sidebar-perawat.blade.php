@@ -37,6 +37,8 @@
                     </a>
                 </li>
 
+                <li class="nav-header">LAYANAN</li>
+
                 <li class="nav-item menu-open">
                     <a href="{{ route('perawat.data-pasien.index') }}" class="nav-link active">
                         <i class="nav-icon bi bi-speedometer"></i>
@@ -50,6 +52,8 @@
                         <p>Rekam Medis</p>
                     </a>
                 </li>
+
+                <li class="nav-header">SYSTEM</li>
 
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST" style="display:inline;">

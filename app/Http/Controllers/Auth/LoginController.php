@@ -77,7 +77,7 @@ class LoginController extends Controller
                 ->withInput();
         }
 
-        $namaRole = Role::where('idrole', $user->role[0]->idrole ?? null)->first();
+        $namaRole = Role::where('idrole', $user->roleUser[0]->idrole ?? null)->first();
         Auth::login($user);
 
         $request->session()->put([

@@ -25,7 +25,6 @@ class isPemilik
         $userRole = session('user_role');
 
         // User tanpa role khusus (bukan 1,2,3,4) dianggap sebagai pemilik
-        // Jika tidak ada role atau role selain 1,2,3,4, maka dianggap pemilik
         if (empty($userRole) || !in_array($userRole, [1, 2, 3, 4])) {
             return $next($request);
         } else {
