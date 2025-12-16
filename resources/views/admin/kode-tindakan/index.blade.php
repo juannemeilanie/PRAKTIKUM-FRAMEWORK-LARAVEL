@@ -1,6 +1,11 @@
 @extends('layouts.lte.main')
 
 @section('content')
+
+@if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="card p-3">

@@ -2,6 +2,10 @@
 
 @section('content')
 
+@if(session('success'))
+<div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
 <style>
     tr { text-align: center; }
     th, td { border:1px solid #000000ff; padding:10px; text-align:center; }

@@ -21,7 +21,7 @@ class SiteController extends Controller
     }
 
     public function login(){
-        return view('site.login');
+        return view('auth.login');
     }
     
 }

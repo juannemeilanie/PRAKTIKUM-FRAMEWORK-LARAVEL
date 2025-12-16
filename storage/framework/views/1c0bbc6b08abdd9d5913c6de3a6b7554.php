@@ -61,16 +61,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-4">
-                <div class="info-box shadow-sm">
-                    <span class="info-box-icon text-bg-warning"><i class="bi bi-plus-circle"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Tambah Pet Baru</span>
-                        <a href="#" class="btn btn-sm btn-primary mt-2">Daftar Pet</a>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- ====== TABLE PET ====== -->

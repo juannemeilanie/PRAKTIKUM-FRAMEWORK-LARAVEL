@@ -21,7 +21,7 @@ class isAdministrator
     {
         // Jika user tidak terautentikasi, redirect ke login
         if (!Auth::check()) {
-
+            
             return redirect()->route('login');
         }
 

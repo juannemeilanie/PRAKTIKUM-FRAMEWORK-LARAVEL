@@ -45,18 +45,6 @@
 
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box">
-                        <span class="info-box-icon text-bg-warning shadow-sm">
-                            <i class="bi bi-clipboard2-pulse-fill"></i>
-                        </span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">Antrian Hari Ini</span>
-                            <span class="info-box-number">0</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box">
                         <span class="info-box-icon text-bg-danger shadow-sm">
                             <i class="bi bi-people-fill"></i>
                         </span>
